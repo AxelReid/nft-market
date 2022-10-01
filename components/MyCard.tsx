@@ -30,6 +30,7 @@ const useStyles = createStyles((theme, _, getRef) => ({
   },
   hoverLink: {
     textDecoration: 'underline',
+    textDecorationThickness: 1,
     color: theme.colors.indigo[theme.colorScheme === 'dark' ? 3 : 5],
   },
 }))

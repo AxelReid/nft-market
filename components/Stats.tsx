@@ -20,6 +20,7 @@ import WalletIcon from 'assets/WalletIcon'
 import MyCarousel, { MyCarouselSlide } from './MyCarousel'
 import SmCard from './SmCard'
 import Img from 'assets/cards/Image.png'
+import { useMediaQuery } from '@mantine/hooks'
 
 const stats = [
   { value: '300k', label: 'Users Active', icon: <UserCircleIcon width={40} /> },
@@ -30,6 +31,7 @@ const stats = [
 const Stats = () => {
   const { colorScheme } = useMantineColorScheme()
   const ioscolors = colorScheme === 'light' ? ['#F2F3F6', '#F2F3F6'] : undefined
+  const smSc = useMediaQuery('(max-width: 800px)')
 
   return (
     <>
@@ -121,7 +123,7 @@ const Stats = () => {
       <WrapperFull noEdge>
         <MyCarousel slideSize={200} slideGap={24} align="start" loop pb={40}>
           {[...Array(20)].map((_, i) => (
-            <MyCarouselSlide size={89} key={i}>
+            <MyCarouselSlide size={smSc ? 70 : 89} key={i}>
               <SmCard img={Img} value="2.55 ETH" fixed={false} />
             </MyCarouselSlide>
           ))}

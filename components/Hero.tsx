@@ -7,6 +7,7 @@ import {
   Group,
   Input,
   MantineProvider,
+  MediaQuery,
   Paper,
   Select,
   Stack,
@@ -44,12 +45,12 @@ const Hero = () => {
 
   return (
     <Stack align="center" mt={180} mb={200}>
-      <SmCard img={Img} value="2.55 ETH" top={310} right={170} />
-      <SmCard img={Img1} value="2.55 ETH" top={600} right={75} />
-      <SmCard img={Img2} value="2.55 ETH" top={800} right={350} />
-      <SmCard img={Img3} value="2.55 ETH" top={370} left={150} />
-      <SmCard img={Img4} value="2.55 ETH" top={700} left={360} />
-      <SmCard img={Img1} value="2.55 ETH" top={800} left={-45} />
+      <SmCard img={Img} value="2.55 ETH" top="30%" right="9%" />
+      <SmCard img={Img1} value="2.55 ETH" top="60%" right="4%" />
+      <SmCard img={Img2} value="2.55 ETH" top="80%" right="19%" />
+      <SmCard img={Img3} value="2.55 ETH" top="37%" left="7%" />
+      <SmCard img={Img4} value="2.55 ETH" top="70%" left="18%" />
+      <SmCard img={Img1} value="2.55 ETH" top="80%" left={-45} />
 
       <Text
         color="dimmed"

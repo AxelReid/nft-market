@@ -1,14 +1,15 @@
 import { createStyles, Text } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import Image, { StaticImageData } from 'next/image'
 import React from 'react'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { smSc }: { smSc: boolean }) => ({
   card: {
     section: {
       boxShadow: '0px 25px 45px rgba(6, 7, 20, 0.25)',
-      width: 89,
-      height: 89,
-      borderRadius: 20,
+      width: smSc ? 70 : 89,
+      height: smSc ? 70 : 89,
+      borderRadius: smSc ? 10 : 20,
     },
     '.text': {
       color: theme.colors.darkish[2],
@@ -35,15 +36,24 @@ const SmCard = ({
   bottom,
   left,
 }: Props) => {
-  const { classes } = useStyles()
+  const smSc = useMediaQuery('(max-width: 800px)')
+  const { classes } = useStyles({ smSc })
 
   return (
     <div
       className={classes.card}
       style={{
         ...(fixed
-          ? { position: 'absolute', zIndex: -1, top, right, bottom, left }
-          : {}),
+          ? {
+              position: 'absolute',
+              zIndex: -1,
+              top,
+              right,
+              bottom,
+              left,
+              opacity: smSc ? 0.5 : 1,
+            }
+          : { display: 'flex', flexDirection: 'column', alignItems: 'center' }),
       }}
     >
       <section className="shadow-xxl">
@@ -51,8 +61,8 @@ const SmCard = ({
           src={img}
           objectFit="contain"
           objectPosition="right"
-          width={89}
-          height={89}
+          width={smSc ? 70 : 89}
+          height={smSc ? 70 : 89}
           alt=""
         />
       </section>
