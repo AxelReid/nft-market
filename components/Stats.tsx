@@ -21,6 +21,7 @@ import MyCarousel, { MyCarouselSlide } from './MyCarousel'
 import SmCard from './SmCard'
 import Img from 'assets/cards/Image.png'
 import { useMediaQuery } from '@mantine/hooks'
+import useTxtStyles from 'styles/useTxtStyles'
 
 const stats = [
   { value: '300k', label: 'Users Active', icon: <UserCircleIcon width={40} /> },
@@ -30,6 +31,7 @@ const stats = [
 ]
 const Stats = () => {
   const { colorScheme } = useMantineColorScheme()
+  const { classes } = useTxtStyles()
   const ioscolors = colorScheme === 'light' ? ['#F2F3F6', '#F2F3F6'] : undefined
   const smSc = useMediaQuery('(max-width: 800px)')
 
@@ -86,10 +88,7 @@ const Stats = () => {
               >
                 OVERLINE
               </Text>
-              <Text
-                weight={600}
-                sx={{ lineHeight: 1, fontSize: 'min(64px,10vw)' }}
-              >
+              <Text className={classes.title}>
                 Cursus vitae
                 <br />
                 sollicitudin donec
@@ -108,7 +107,7 @@ const Stats = () => {
                 </Button>
               </Group>
             </Box>
-            <div style={{ zIndex: -1 }}>
+            <div style={{ zIndex: -1, opacity: 0.6 }}>
               <Image
                 layout="fill"
                 objectFit="contain"

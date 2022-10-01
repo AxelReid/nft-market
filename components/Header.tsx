@@ -122,14 +122,24 @@ const Links = ({ type = 'nav' }: { type?: 'nav' | 'menu' }) => {
       )}
       {type === 'menu' && (
         <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-          <Menu.Item component={NextLink} href="/" className={classes.navLink}>
+          <Menu.Item
+            key="contact"
+            component={NextLink}
+            href="/"
+            className={classes.navLink}
+          >
             Contact
           </Menu.Item>
         </MediaQuery>
       )}
       {type === 'menu' && (
         <MediaQuery largerThan={565} styles={{ display: 'none' }}>
-          <Menu.Item component={NextLink} href="/" className={classes.navLink}>
+          <Menu.Item
+            key="my-account"
+            component={NextLink}
+            href="/"
+            className={classes.navLink}
+          >
             My account
           </Menu.Item>
         </MediaQuery>

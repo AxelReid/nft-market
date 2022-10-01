@@ -1,15 +1,11 @@
 import { Text } from '@mantine/core'
 import WrapperFull from 'containers/WrapperFull'
+import dummy from 'data/dummy'
 import React from 'react'
-import { Dummy } from 'types/data'
 import MyCard from './MyCard'
 import MyCarousel, { MyCarouselSlide } from './MyCarousel'
 
-interface Props {
-  dummy: Dummy
-}
-
-const SliderBigCard = ({ dummy }: Props) => {
+const SliderBigCard = () => {
   return (
     <WrapperFull noEdge>
       <Text align="center" size={36} weight={600} mb={96}>

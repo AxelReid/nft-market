@@ -26,7 +26,7 @@ const BgImg = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_1_1220)">
+          <g clipPath="url(#clip0_1_1220)">
             <ellipse
               opacity="0.1"
               cx="960"
@@ -35,17 +35,17 @@ const BgImg = () => {
               ry="1058.5"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               opacity="0.1"
               d="M1936.5 746.5C1936.5 1285.53 1499.31 1722.5 960 1722.5C420.693 1722.5 -16.5 1285.53 -16.5 746.5C-16.5 207.471 420.693 -229.5 960 -229.5C1499.31 -229.5 1936.5 207.471 1936.5 746.5Z"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               opacity="0.2"
@@ -55,17 +55,17 @@ const BgImg = () => {
               ry="895.5"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               opacity="0.3"
               d="M1774.5 746.5C1774.5 1196.06 1409.84 1560.5 960 1560.5C510.163 1560.5 145.5 1196.06 145.5 746.5C145.5 296.941 510.163 -67.5 960 -67.5C1409.84 -67.5 1774.5 296.941 1774.5 746.5Z"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               opacity="0.4"
@@ -75,24 +75,24 @@ const BgImg = () => {
               ry="733.5"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               opacity="0.5"
               d="M1609.5 746.5C1609.5 1104.93 1318.71 1395.5 960 1395.5C601.29 1395.5 310.5 1104.93 310.5 746.5C310.5 388.068 601.29 97.5 960 97.5C1318.71 97.5 1609.5 388.068 1609.5 746.5Z"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <path
               opacity="0.6"
               d="M1530.5 746.5C1530.5 1061.3 1275.08 1316.5 960 1316.5C644.92 1316.5 389.5 1061.3 389.5 746.5C389.5 431.699 644.92 176.5 960 176.5C1275.08 176.5 1530.5 431.699 1530.5 746.5Z"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               opacity="0.7"
@@ -102,17 +102,17 @@ const BgImg = () => {
               ry="494.5"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               opacity="0.8"
               d="M1367.5 746.5C1367.5 971.278 1185.06 1153.5 960 1153.5C734.942 1153.5 552.5 971.278 552.5 746.5C552.5 521.722 734.942 339.5 960 339.5C1185.06 339.5 1367.5 521.722 1367.5 746.5Z"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               opacity="0.9"
@@ -122,16 +122,16 @@ const BgImg = () => {
               ry="314.5"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               d="M1183.5 746.5C1183.5 869.656 1083.44 969.5 960 969.5C836.561 969.5 736.5 869.656 736.5 746.5C736.5 623.344 836.561 523.5 960 523.5C1083.44 523.5 1183.5 623.344 1183.5 746.5Z"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               cx="960"
@@ -140,10 +140,10 @@ const BgImg = () => {
               ry="150.5"
               fill="#060714"
               stroke="#0D0F2B"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
           </g>
           <rect
@@ -192,9 +192,9 @@ const BgImg = () => {
               width="2420"
               height="1360"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feBlend
                 mode="normal"
                 in="SourceGraphic"
@@ -214,8 +214,8 @@ const BgImg = () => {
               y2="1191"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#060714" stop-opacity="0" />
-              <stop offset="1" stop-color="#060714" />
+              <stop stopColor="#060714" stopOpacity="0" />
+              <stop offset="1" stopColor="#060714" />
             </linearGradient>
             <clipPath id="clip0_1_1220">
               <rect width="1920" height="1191" fill="white" />
@@ -230,7 +230,7 @@ const BgImg = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_1_187)">
+          <g clipPath="url(#clip0_1_187)">
             <ellipse
               opacity="0.1"
               cx="960"
@@ -239,17 +239,17 @@ const BgImg = () => {
               ry="1058.5"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               opacity="0.1"
               d="M1936.5 746.5C1936.5 1285.53 1499.31 1722.5 960 1722.5C420.693 1722.5 -16.5 1285.53 -16.5 746.5C-16.5 207.471 420.693 -229.5 960 -229.5C1499.31 -229.5 1936.5 207.471 1936.5 746.5Z"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               opacity="0.2"
@@ -259,17 +259,17 @@ const BgImg = () => {
               ry="895.5"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               opacity="0.3"
               d="M1774.5 746.5C1774.5 1196.06 1409.84 1560.5 960 1560.5C510.163 1560.5 145.5 1196.06 145.5 746.5C145.5 296.941 510.163 -67.5 960 -67.5C1409.84 -67.5 1774.5 296.941 1774.5 746.5Z"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               opacity="0.4"
@@ -279,24 +279,24 @@ const BgImg = () => {
               ry="733.5"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               opacity="0.5"
               d="M1609.5 746.5C1609.5 1104.93 1318.71 1395.5 960 1395.5C601.29 1395.5 310.5 1104.93 310.5 746.5C310.5 388.068 601.29 97.5 960 97.5C1318.71 97.5 1609.5 388.068 1609.5 746.5Z"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <path
               opacity="0.6"
               d="M1530.5 746.5C1530.5 1061.3 1275.08 1316.5 960 1316.5C644.92 1316.5 389.5 1061.3 389.5 746.5C389.5 431.699 644.92 176.5 960 176.5C1275.08 176.5 1530.5 431.699 1530.5 746.5Z"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               opacity="0.7"
@@ -306,17 +306,17 @@ const BgImg = () => {
               ry="494.5"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               opacity="0.8"
               d="M1367.5 746.5C1367.5 971.278 1185.06 1153.5 960 1153.5C734.942 1153.5 552.5 971.278 552.5 746.5C552.5 521.722 734.942 339.5 960 339.5C1185.06 339.5 1367.5 521.722 1367.5 746.5Z"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               opacity="0.9"
@@ -326,16 +326,16 @@ const BgImg = () => {
               ry="314.5"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
             <path
               d="M1183.5 746.5C1183.5 869.656 1083.44 969.5 960 969.5C836.561 969.5 736.5 869.656 736.5 746.5C736.5 623.344 836.561 523.5 960 523.5C1083.44 523.5 1183.5 623.344 1183.5 746.5Z"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
+              strokeWidth="3"
             />
             <ellipse
               cx="960"
@@ -344,10 +344,10 @@ const BgImg = () => {
               ry="150.5"
               fill="white"
               stroke="#F7F8FC"
-              stroke-width="3"
-              stroke-miterlimit="4.62023"
-              stroke-linecap="round"
-              stroke-dasharray="35 50 15 15"
+              strokeWidth="3"
+              strokeMiterlimit="4.62023"
+              strokeLinecap="round"
+              strokeDasharray="35 50 15 15"
             />
           </g>
           <rect
@@ -402,9 +402,9 @@ const BgImg = () => {
               width="2420"
               height="1360"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feBlend
                 mode="normal"
                 in="SourceGraphic"
@@ -424,8 +424,8 @@ const BgImg = () => {
               y2="1191"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="white" stop-opacity="0" />
-              <stop offset="1" stop-color="white" />
+              <stop stopColor="white" stopOpacity="0" />
+              <stop offset="1" stopColor="white" />
             </linearGradient>
             <clipPath id="clip0_1_187">
               <rect width="1920" height="1191" fill="white" />

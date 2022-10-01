@@ -2,8 +2,11 @@ import React from 'react'
 import Image from 'next/image'
 import { Button, Grid, Group, MediaQuery, Text } from '@mantine/core'
 import Wrapper from 'containers/Wrapper'
+import useTxtStyles from 'styles/useTxtStyles'
 
 const InkChart = () => {
+  const { classes } = useTxtStyles()
+
   return (
     <Wrapper my={120}>
       <Grid align="center">
@@ -17,7 +20,7 @@ const InkChart = () => {
           >
             OVERLINE
           </Text>
-          <Text weight={600} sx={{ lineHeight: 1, fontSize: 'min(64px,10vw)' }}>
+          <Text className={classes.title}>
             Sapien ipsum
             <br />
             scelerisque

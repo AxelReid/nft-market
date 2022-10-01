@@ -12,13 +12,7 @@ const WrapperFull = (props: Props) => {
   const px = !isXxl && props.noEdge ? 0 : 'lg'
 
   return (
-    <Container
-      {...props}
-      size={1920}
-      px={px}
-      style={{ position: 'relative' }}
-      {...props}
-    >
+    <Container size={1920} px={px} style={{ position: 'relative' }} {...props}>
       {props.children}
     </Container>
   )

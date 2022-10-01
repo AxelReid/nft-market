@@ -4,8 +4,11 @@ import { Box, Button, Grid, Group, MediaQuery, Text } from '@mantine/core'
 import Wrapper from 'containers/Wrapper'
 import Sol from 'assets/Sol'
 import Pul from 'assets/Pul'
+import useTxtStyles from 'styles/useTxtStyles'
 
 const PlaneWatch = () => {
+  const { classes } = useTxtStyles()
+
   return (
     <Wrapper mb={120} mt={168}>
       <Grid align="center" gutter={40}>
@@ -33,7 +36,7 @@ const PlaneWatch = () => {
           >
             OVERLINE
           </Text>
-          <Text weight={600} sx={{ lineHeight: 1, fontSize: 'min(64px,10vw)' }}>
+          <Text className={classes.title}>
             Habitant tristique
             <br />
             aliquam in vel
@@ -68,7 +71,7 @@ const PlaneWatch = () => {
           </Group>
           <Group>
             <Button>Get started</Button>
-            <Button variant="default" color="gray">
+            <Button variant="outline" color="gray">
               Learn more
             </Button>
           </Group>

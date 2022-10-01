@@ -2,13 +2,9 @@ import { Button, Divider, Grid, Group, Text } from '@mantine/core'
 import Wrapper from '../containers/Wrapper'
 import React from 'react'
 import MyCard from './MyCard'
-import { Dummy } from 'types/data'
+import dummy from 'data/dummy'
 
-interface Props {
-  dummy: Dummy
-}
-
-const Filter = ({ dummy }: Props) => {
+const Filter = () => {
   return (
     <Wrapper mt={100}>
       <div>
@@ -50,7 +46,6 @@ const Filter = ({ dummy }: Props) => {
           Show me more
         </Button>
       </Group>
-      <Divider mt={110} />
     </Wrapper>
   )
 }

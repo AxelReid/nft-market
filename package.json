@@ -11,9 +11,11 @@
     "@mantine/core": "^5.4.1",
     "@mantine/hooks": "^5.4.1",
     "@mantine/next": "^5.4.1",
+    "apexcharts": "^3.35.5",
     "cookies-next": "^2.1.1",
     "next": "latest",
     "react": "18.2.0",
+    "react-apexcharts": "^1.4.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {

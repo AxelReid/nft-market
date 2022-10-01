@@ -6,8 +6,6 @@ import {
   Divider,
   Group,
   Input,
-  MantineProvider,
-  MediaQuery,
   Paper,
   Select,
   Stack,
@@ -24,11 +22,12 @@ import Img1 from 'assets/cards/Image(1).png'
 import Img2 from 'assets/cards/Image(2).png'
 import Img3 from 'assets/cards/Image(3).png'
 import Img4 from 'assets/cards/Image(4).png'
-import { ArrowDownIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon } from '@heroicons/react/24/solid'
+import { useMediaQuery } from '@mantine/hooks'
 
 const useStyles = createStyles((theme) => ({
   title: {
-    fontSize: 'clamp(45px,11vw,120px)',
+    fontSize: 'clamp(45px,12.3vw,120px)',
     lineHeight: '80%',
   },
   removeStyle: {
@@ -42,6 +41,7 @@ const useStyles = createStyles((theme) => ({
 
 const Hero = () => {
   const { classes, cx } = useStyles()
+  const mdSc = useMediaQuery('(max-width: 800px)')
 
   return (
     <Stack align="center" mt={180} mb={200}>
@@ -61,11 +61,17 @@ const Hero = () => {
       >
         NON FUNGIBLE TOKENS
       </Text>
-      <Group noWrap mr={'8%'}>
+      <Group noWrap align="center" mr={'8%'}>
         <Text weight={600} className={classes.title}>
           A new NFT
         </Text>
-        <Image src={Vector} width={36} height={85} objectFit="contain" alt="" />
+        <Image
+          src={Vector}
+          width={mdSc ? 22 : 36}
+          height={mdSc ? 50 : 86}
+          objectFit="contain"
+          alt=""
+        />
       </Group>
       <Group noWrap ml={'8%'}>
         <Image src={Frame} width={62} height={62} objectFit="contain" alt="" />
@@ -78,10 +84,10 @@ const Hero = () => {
       </Text>
       <Paper
         className="shadow-xxl"
-        p="lg"
+        p={mdSc ? 'sm' : 'lg'}
         mt={35}
         mx="md"
-        radius="lg"
+        radius={mdSc ? 'lg' : 'lg'}
         style={{ width: '100%', maxWidth: 643, background: 'white' }}
       >
         <Group noWrap spacing={0} align="center">
@@ -90,7 +96,12 @@ const Hero = () => {
             style={{ flex: 'auto' }}
             classNames={{ input: cx(classes.removeStyle, classes.select) }}
           />
-          <Divider orientation="vertical" mx="sm" color="#ccc" />
+          <Divider
+            orientation="vertical"
+            my={5}
+            mx={mdSc ? 0 : 'sm'}
+            color="#ccc"
+          />
           <Select
             placeholder="Category"
             mr="lg"

@@ -71,6 +71,19 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
           color: colorScheme === 'dark' ? 'white' : '#060714',
         },
       },
+      Divider: {
+        defaultProps: {
+          color: colorScheme === 'dark' ? 'darkish.1' : 'darkish.3',
+        },
+      },
+      Card: {
+        styles: (theme) => ({
+          root: {
+            borderColor:
+              theme.colors.darkish[theme.colorScheme === 'dark' ? 1 : 3],
+          },
+        }),
+      },
       Button: {
         defaultProps: {
           size: 'md',
@@ -86,9 +99,7 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
             ...((variant === 'default' || variant === 'outline') && {
               borderWidth: 2,
               borderColor:
-                theme.colorScheme === 'dark'
-                  ? theme.colors.gray[7]
-                  : theme.colors.darkish[2],
+                theme.colors.darkish[theme.colorScheme === 'dark' ? 1 : 2],
             }),
           },
         }),

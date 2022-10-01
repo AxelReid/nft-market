@@ -13,7 +13,7 @@ const ArtworksIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1_518)">
+      <g clipPath="url(#clip0_1_518)">
         <path
           d="M15 25.75C15 25.0596 14.4404 24.5 13.75 24.5H6.25C5.55963 24.5 5 25.0596 5 25.75C5 26.4404 5.55963 27 6.25 27H13.75C14.4404 27 15 26.4404 15 25.75Z"
           fill={fill}

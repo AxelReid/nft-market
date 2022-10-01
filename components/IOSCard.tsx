@@ -2,12 +2,27 @@ import { Card, CardProps, createStyles } from '@mantine/core'
 import React from 'react'
 
 const useStyles = createStyles(
-  (theme, { h, w, cl }: { h: number; w: number | string; cl: string }) => ({
+  (
+    theme,
+    {
+      bodyW,
+      h,
+      w,
+      cl,
+      topbar,
+    }: {
+      bodyW: number | string
+      h: number
+      w: number | string
+      cl: string
+      topbar: boolean
+    }
+  ) => ({
     card: {
       position: 'relative',
-      width: 440,
+      width: bodyW,
       overflow: 'visible',
-      borderTopLeftRadius: 0,
+      borderTopLeftRadius: topbar ? 0 : '',
       '.topbar': {
         position: 'absolute',
         top: -h,
@@ -48,15 +63,18 @@ const useStyles = createStyles(
 
 interface Props {
   children: React.ReactNode
+  bodyW?: number | string
   w?: number | string
   h?: number
   colors?: string[]
+  topbar?: boolean
 }
 
 const IOSCard = (props: CardProps & Props) => {
+  const { topbar = true, bodyW = 440 } = props
   const { w = 170, h = 21, colors = ['#1c1d29', '#060714'], children } = props
 
-  const { classes } = useStyles({ h, w, cl: colors[0] })
+  const { classes } = useStyles({ bodyW, w, h, cl: colors[0], topbar })
 
   return (
     <Card
@@ -69,14 +87,16 @@ const IOSCard = (props: CardProps & Props) => {
       })}
       {...props}
     >
-      <Card withBorder radius={0} p={0} pl="md" className="topbar">
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <Card className="curve" p={0} withBorder radius={0}>
-          {''}
+      {topbar && (
+        <Card withBorder radius={0} p={0} pl="md" className="topbar">
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <Card className="curve" p={0} withBorder radius={0}>
+            {''}
+          </Card>
         </Card>
-      </Card>
+      )}
       {children}
     </Card>
   )

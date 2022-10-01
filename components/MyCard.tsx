@@ -22,7 +22,6 @@ import Link from 'next/link'
 const useStyles = createStyles((theme, _, getRef) => ({
   img: {
     transition: '.3s',
-    cursor: 'pointer',
   },
   hoverImg: {
     transform: 'scale(1.1)',
@@ -98,17 +97,18 @@ const MyCard = ({
           borderRadius: 20,
         }}
       >
-        <div style={{ borderRadius: 20 }}>
-          <Image
-            src={image}
-            layout="fill"
-            alt=""
-            id="image"
-            className={cx(classes.img, { [classes.hoverImg]: !!isHover })}
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
-          />
-        </div>
+        <Link href="/nft/1">
+          <a style={{ borderRadius: 20 }}>
+            <Image
+              src={image}
+              layout="fill"
+              alt=""
+              className={cx(classes.img, { [classes.hoverImg]: !!isHover })}
+              onMouseEnter={() => setIsHover(true)}
+              onMouseLeave={() => setIsHover(false)}
+            />
+          </a>
+        </Link>
       </AspectRatio>
       <Box
         mt={card_type !== 'small' ? 'xl' : 0}
@@ -116,9 +116,8 @@ const MyCard = ({
       >
         <Grid>
           <Col span="auto">
-            <Link href="/" passHref>
+            <Link href="/nft/1" passHref>
               <Text
-                id="titleLink"
                 component="a"
                 size={20}
                 weight={600}
