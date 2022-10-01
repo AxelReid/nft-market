@@ -1,13 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
-import { Box, Button, Group, Text } from '@mantine/core'
+import { Button, Grid, Group, MediaQuery, Text } from '@mantine/core'
 import Wrapper from 'containers/Wrapper'
 
 const InkChart = () => {
   return (
     <Wrapper my={120}>
-      <Group grow position="apart" align="center">
-        <Box>
+      <Grid align="center">
+        <Grid.Col span={11} sm={6} md={7}>
           <Text
             color="dimmed"
             size={15}
@@ -17,7 +17,7 @@ const InkChart = () => {
           >
             OVERLINE
           </Text>
-          <Text weight={600} size={64} sx={{ lineHeight: 1 }}>
+          <Text weight={600} sx={{ lineHeight: 1, fontSize: 'min(64px,10vw)' }}>
             Sapien ipsum
             <br />
             scelerisque
@@ -35,16 +35,22 @@ const InkChart = () => {
               Learn more
             </Button>
           </Group>
-        </Box>
-        <Image
-          src="/images/RightImage.png"
-          width={684}
-          height={616}
-          layout="responsive"
-          objectFit="contain"
-          alt=""
-        />
-      </Group>
+        </Grid.Col>
+        <Grid.Col span={1} sm={6} md={5}>
+          <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <div>
+              <Image
+                src="/images/RightImage.png"
+                width={684}
+                height={616}
+                layout="responsive"
+                objectFit="contain"
+                alt=""
+              />
+            </div>
+          </MediaQuery>
+        </Grid.Col>
+      </Grid>
     </Wrapper>
   )
 }

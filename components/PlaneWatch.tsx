@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { Box, Button, Group, Text } from '@mantine/core'
+import { Box, Button, Grid, Group, MediaQuery, Text } from '@mantine/core'
 import Wrapper from 'containers/Wrapper'
 import Sol from 'assets/Sol'
 import Pul from 'assets/Pul'
@@ -8,16 +8,22 @@ import Pul from 'assets/Pul'
 const PlaneWatch = () => {
   return (
     <Wrapper mb={120} mt={168}>
-      <Group grow position="apart" align="center">
-        <Image
-          src="/images/LeftImage.png"
-          width={684}
-          height={616}
-          layout="responsive"
-          objectFit="contain"
-          alt=""
-        />
-        <Box>
+      <Grid align="center" gutter={40}>
+        <Grid.Col span={1} sm={5} md={6}>
+          <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <div style={{ maxWidth: 684 }}>
+              <Image
+                src="/images/LeftImage.png"
+                width={684}
+                height={616}
+                layout="responsive"
+                objectFit="contain"
+                alt=""
+              />
+            </div>
+          </MediaQuery>
+        </Grid.Col>
+        <Grid.Col span={11} sm={7} md={6}>
           <Text
             color="dimmed"
             size={15}
@@ -27,7 +33,7 @@ const PlaneWatch = () => {
           >
             OVERLINE
           </Text>
-          <Text weight={600} size={64} sx={{ lineHeight: 1 }}>
+          <Text weight={600} sx={{ lineHeight: 1, fontSize: 'min(64px,10vw)' }}>
             Habitant tristique
             <br />
             aliquam in vel
@@ -66,8 +72,8 @@ const PlaneWatch = () => {
               Learn more
             </Button>
           </Group>
-        </Box>
-      </Group>
+        </Grid.Col>
+      </Grid>
     </Wrapper>
   )
 }

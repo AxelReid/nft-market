@@ -1,18 +1,18 @@
 import type { NextPage } from 'next'
-import { Button, Divider, Grid, Group, Text } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
+import dynamic from 'next/dynamic'
+import { Divider } from '@mantine/core'
 import BgImg from 'components/BgImg'
-import MyCard from 'components/MyCard'
 import Header from 'components/Header'
 import Hero from 'components/Hero'
 import WrapperFull from 'containers/WrapperFull'
-import MyCarousel, { MyCarouselSlide } from 'components/MyCarousel'
-import InkChart from 'components/InkChart'
-import PlaneWatch from 'components/PlaneWatch'
-import TheHand from 'components/TheHand'
-import Stats from 'components/Stats'
-import Wrapper from 'containers/Wrapper'
-import MyFooter from 'components/MyFooter'
+
+const SliderBigCard = dynamic(() => import('components/SliderBigCard'))
+const InkChart = dynamic(() => import('components/InkChart'))
+const PlaneWatch = dynamic(() => import('components/PlaneWatch'))
+const TheHand = dynamic(() => import('components/TheHand'))
+const Filter = dynamic(() => import('components/Filter'))
+const Stats = dynamic(() => import('components/Stats'))
+const MyFooter = dynamic(() => import('components/MyFooter'))
 
 const dummy = [
   {
@@ -91,69 +91,12 @@ const Home: NextPage = () => {
         <Hero />
       </WrapperFull>
 
-      <WrapperFull noEdge>
-        <Text align="center" size={36} weight={600} mb={96}>
-          Latest live auctions
-        </Text>
-        <MyCarousel>
-          {dummy.map((dum, i) => (
-            <MyCarouselSlide key={i} size={400}>
-              <MyCard {...dum} />
-            </MyCarouselSlide>
-          ))}
-        </MyCarousel>
-      </WrapperFull>
-
+      <SliderBigCard dummy={dummy} />
       <InkChart />
-
       <TheHand />
-
       <PlaneWatch />
-
       <Divider />
-      <Wrapper mt={100}>
-        <div>
-          <Text
-            color="dimmed"
-            size={15}
-            weight={500}
-            align="center"
-            style={{ letterSpacing: 3 }}
-            mb={16}
-          >
-            OVERLINE
-          </Text>
-          <Text align="center" size={36} weight={600}>
-            Most popular live auctions
-          </Text>
-          <Group position="center" mt={44}>
-            <Button variant="filled">Architecture</Button>
-            <Button variant="outline" color="gray">
-              Photography
-            </Button>
-            <Button variant="outline" color="gray">
-              Games
-            </Button>
-            <Button variant="outline" color="gray">
-              Music
-            </Button>
-          </Group>
-        </div>
-        <Grid gutter={0} mt={80}>
-          {dummy.map((dum, i) => (
-            <Grid.Col span={6} sm={4} md={3} lg={2} key={i}>
-              <MyCard {...dum} card_type="middle" truncate />
-            </Grid.Col>
-          ))}
-        </Grid>
-        <Group mt={80} position="center">
-          <Button variant="outline" color="gray">
-            Show me more
-          </Button>
-        </Group>
-        <Divider mt={110} />
-      </Wrapper>
-
+      <Filter dummy={dummy} />
       <Stats />
       <MyFooter />
     </div>

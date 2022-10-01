@@ -2,7 +2,7 @@ import { Card, CardProps, createStyles } from '@mantine/core'
 import React from 'react'
 
 const useStyles = createStyles(
-  (theme, { h, w, cl }: { h: number; w: number; cl: string }) => ({
+  (theme, { h, w, cl }: { h: number; w: number | string; cl: string }) => ({
     card: {
       position: 'relative',
       width: 440,
@@ -48,7 +48,7 @@ const useStyles = createStyles(
 
 interface Props {
   children: React.ReactNode
-  w?: number
+  w?: number | string
   h?: number
   colors?: string[]
 }

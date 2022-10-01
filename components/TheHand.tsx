@@ -78,7 +78,7 @@ const TheHand = () => {
   const { classes } = useStyles()
 
   return (
-    <WrapperFull>
+    <WrapperFull noEdge>
       <MyCarousel
         slideSize={440}
         slideGap={24}

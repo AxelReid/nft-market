@@ -6,6 +6,7 @@ import {
   Divider,
   Group,
   Input,
+  MantineProvider,
   Paper,
   Select,
   Stack,
@@ -22,20 +23,24 @@ import Img1 from 'assets/cards/Image(1).png'
 import Img2 from 'assets/cards/Image(2).png'
 import Img3 from 'assets/cards/Image(3).png'
 import Img4 from 'assets/cards/Image(4).png'
+import { ArrowDownIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
 
 const useStyles = createStyles((theme) => ({
   title: {
-    fontSize: 'clamp(45px,10vw,120px)',
-    lineHeight: 0.8,
+    fontSize: 'clamp(45px,11vw,120px)',
+    lineHeight: '80%',
   },
   removeStyle: {
     border: 0,
     background: 'transparent',
   },
+  select: {
+    color: theme.colors.darkish[1],
+  },
 }))
 
 const Hero = () => {
-  const { classes } = useStyles()
+  const { classes, cx } = useStyles()
 
   return (
     <Stack align="center" mt={180} mb={200}>
@@ -55,13 +60,13 @@ const Hero = () => {
       >
         NON FUNGIBLE TOKENS
       </Text>
-      <Group noWrap mr={100}>
+      <Group noWrap mr={'8%'}>
         <Text weight={600} className={classes.title}>
           A new NFT
         </Text>
         <Image src={Vector} width={36} height={85} objectFit="contain" alt="" />
       </Group>
-      <Group noWrap ml={100}>
+      <Group noWrap ml={'8%'}>
         <Image src={Frame} width={62} height={62} objectFit="contain" alt="" />
         <Text weight={600} className={classes.title}>
           Experience
@@ -76,15 +81,15 @@ const Hero = () => {
         mt={35}
         mx="md"
         radius="lg"
-        style={{ width: '100%', maxWidth: 643 }}
+        style={{ width: '100%', maxWidth: 643, background: 'white' }}
       >
         <Group noWrap spacing={0} align="center">
           <Input
             placeholder="Items, collections and creators"
             style={{ flex: 'auto' }}
-            classNames={{ input: classes.removeStyle }}
+            classNames={{ input: cx(classes.removeStyle, classes.select) }}
           />
-          <Divider orientation="vertical" mx="sm" />
+          <Divider orientation="vertical" mx="sm" color="#ccc" />
           <Select
             placeholder="Category"
             mr="lg"
@@ -94,10 +99,14 @@ const Hero = () => {
               { label: 'Games', value: 'games' },
               { label: 'Music', value: 'music' },
             ]}
-            classNames={{ input: classes.removeStyle }}
+            classNames={{
+              input: cx(classes.removeStyle, classes.select),
+              rightSection: classes.select,
+            }}
             style={{ width: 200 }}
+            rightSection={<ChevronDownIcon width={15} />}
           />
-          <ActionIcon size="xl" radius="xl" color="indigo">
+          <ActionIcon size="xl" radius="xl" color="indigo.6">
             <MagnifyingGlassIcon width={24} />
           </ActionIcon>
         </Group>

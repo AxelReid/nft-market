@@ -98,7 +98,7 @@ const MyFooter = () => {
                   <ActionIcon
                     sx={{ minWidth: 80 }}
                     variant="transparent"
-                    color="indigo"
+                    color="indigo.6"
                   >
                     Sign in
                   </ActionIcon>

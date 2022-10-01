@@ -69,11 +69,11 @@ const Stats = () => {
       <Wrapper mt={196} mb={147}>
         <IOSCard
           colors={ioscolors}
-          w={370}
+          w={'min(370px,40%)'}
           h={30}
           style={{ width: '100%', position: 'relative', isolation: 'isolate' }}
         >
-          <Group mt={50} mb={39} ml={78}>
+          <Group mt={50} mb={39} ml={'min(78px,7%)'}>
             <Box>
               <Text
                 color="dimmed"
@@ -84,7 +84,10 @@ const Stats = () => {
               >
                 OVERLINE
               </Text>
-              <Text weight={600} size={64} sx={{ lineHeight: 1 }}>
+              <Text
+                weight={600}
+                sx={{ lineHeight: 1, fontSize: 'min(64px,10vw)' }}
+              >
                 Cursus vitae
                 <br />
                 sollicitudin donec
@@ -98,7 +101,7 @@ const Stats = () => {
               </Text>
               <Group mt={48}>
                 <Button>Get started</Button>
-                <Button variant="outline" color="gray">
+                <Button variant="default" color="gray">
                   Learn more
                 </Button>
               </Group>

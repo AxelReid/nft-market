@@ -4,14 +4,28 @@ import {
   ButtonStylesParams,
   ColorScheme,
   ColorSchemeProvider,
+  DefaultMantineColor,
   MantineProvider,
   MantineThemeOverride,
+  Tuple,
 } from '@mantine/core'
 import { GetServerSidePropsContext } from 'next'
 import { getCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import MyGlobalStyles from 'styles/MyGlobalStyles'
 
+type ExtendedCustomColors =
+  | 'body'
+  | 'darkish'
+  | 'bluish'
+  | 'reddish'
+  | DefaultMantineColor
+
+declare module '@mantine/core' {
+  export interface MantineThemeColorsOverride {
+    colors: Record<ExtendedCustomColors, Tuple<string, 10>>
+  }
+}
 function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props
   const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme)
