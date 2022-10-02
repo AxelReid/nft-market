@@ -90,7 +90,11 @@ const Header = () => {
           </Button>
         </MediaQuery>
         <MediaQuery smallerThan={565} styles={{ display: 'none' }}>
-          <Button>My account</Button>
+          <div>
+            <Link href="/dashboard" passHref>
+              <Button component="a">My account</Button>
+            </Link>
+          </div>
         </MediaQuery>
       </Group>
     </Group>
@@ -137,7 +141,7 @@ const Links = ({ type = 'nav' }: { type?: 'nav' | 'menu' }) => {
           <Menu.Item
             key="my-account"
             component={NextLink}
-            href="/"
+            href="/dashboard"
             className={classes.navLink}
           >
             My account

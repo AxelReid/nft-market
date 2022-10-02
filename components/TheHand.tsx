@@ -86,11 +86,10 @@ const TheHand = () => {
         withIndicators
         align="center"
         initialSlide={1}
-        pt={50}
         pb={50}
         classNames={{ indicator: classes.indicator }}
       >
-        <MyCarouselSlide size={440}>
+        <MyCarouselSlide size={440} pt={50}>
           <Slide title="Check out the hottest Sale offers">
             <MyCarousel
               align="start"
@@ -107,7 +106,7 @@ const TheHand = () => {
             </MyCarousel>
           </Slide>
         </MyCarouselSlide>
-        <MyCarouselSlide size={440}>
+        <MyCarouselSlide size={440} pt={50}>
           <IOSCard>
             <div className={classes.absoluteHand}>
               <div>
@@ -138,7 +137,7 @@ const TheHand = () => {
             </Button>
           </IOSCard>
         </MyCarouselSlide>
-        <MyCarouselSlide size={440}>
+        <MyCarouselSlide size={440} pt={50}>
           <Slide title="Top NFT at a lower price">
             <Stack spacing={15} px={40} mb={45}>
               {data.map((dt, i) => (
