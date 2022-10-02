@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, Group, Text } from '@mantine/core'
+import { Button, Grid, Group, Text } from '@mantine/core'
 import Wrapper from '../containers/Wrapper'
 import React from 'react'
 import MyCard from './MyCard'

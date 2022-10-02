@@ -1,5 +1,6 @@
 import 'styles/globals.css'
 import type { AppProps } from 'next/app'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import {
   ButtonStylesParams,
   ColorScheme,
@@ -13,6 +14,8 @@ import { GetServerSidePropsContext } from 'next'
 import { getCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import MyGlobalStyles from 'styles/MyGlobalStyles'
+
+const queryClient = new QueryClient()
 
 type ExtendedCustomColors =
   | 'body'
@@ -108,20 +111,22 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
   }
 
   return (
-    <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
-    >
-      <MantineProvider
-        theme={theme}
-        withCSSVariables
-        withGlobalStyles
-        withNormalizeCSS
+    <QueryClientProvider client={queryClient}>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
       >
-        <MyGlobalStyles />
-        <Component {...pageProps} />
-      </MantineProvider>
-    </ColorSchemeProvider>
+        <MantineProvider
+          theme={theme}
+          withCSSVariables
+          withGlobalStyles
+          withNormalizeCSS
+        >
+          <MyGlobalStyles />
+          <Component {...pageProps} />
+        </MantineProvider>
+      </ColorSchemeProvider>
+    </QueryClientProvider>
   )
 }
 MyApp.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
