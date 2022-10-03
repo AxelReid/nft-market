@@ -1,9 +1,10 @@
 import axios from 'axios'
-import { OPENSEA_URL } from './constants'
+import { BASE_URL } from './constants'
 
 export const request = axios.create({
-  baseURL: OPENSEA_URL,
+  baseURL: BASE_URL,
   headers: {
+    'Access-Control-Allow-Credentials': true,
     'Content-Type': 'application/json',
   },
 })

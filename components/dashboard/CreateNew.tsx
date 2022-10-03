@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   FileButton,
@@ -11,9 +11,18 @@ import {
 import { useForm } from '@mantine/form'
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
+import { useQuery } from '@tanstack/react-query'
+import requests from 'requests'
 
 const CreateNew = () => {
   const [file, setFile] = useState<{ file: File; preview: string } | null>(null)
+
+  useEffect(() => {
+    requests.collections
+      .getAll()
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err))
+  }, [])
 
   const handleFile = (file: File) => {
     if (file) {

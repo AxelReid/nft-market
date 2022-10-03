@@ -65,7 +65,7 @@ const init = {
     }
     if (token) {
       config.headers = {
-        Authorization: token,
+        Authorization: 'Bearer ' + token,
       }
     }
     if (data) config.data = data
