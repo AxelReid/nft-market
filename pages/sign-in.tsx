@@ -81,7 +81,7 @@ const SignIn = () => {
           : null,
       password2: (val, values) =>
         isRegister && val !== values.password ? "Passwords don't match" : null,
-      biograph: (val) => (!val ? 'Enter a biograph' : null),
+      biograph: (val) => (!val && isRegister ? 'Enter a biograph' : null),
     },
   })
 

@@ -4,7 +4,7 @@ import { BASE_URL } from './constants'
 export const request = axios.create({
   baseURL: BASE_URL,
   headers: {
-    'Access-Control-Allow-Credentials': true,
+    'Access-Control-Allow-Credentials': '*',
     'Content-Type': 'application/json',
   },
 })

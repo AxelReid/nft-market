@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {
+  ActionIcon,
+  AspectRatio,
   Button,
   FileButton,
+  Group,
   NumberInput,
   Select,
   Stack,
@@ -9,19 +12,23 @@ import {
   TextInput,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
+import { ArrowUpTrayIcon, TrashIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
-import { useQuery } from '@tanstack/react-query'
 import requests from 'requests'
 
 const CreateNew = () => {
   const [file, setFile] = useState<{ file: File; preview: string } | null>(null)
 
+  const getCollections = async () => {
+    try {
+      const res = await requests.collections.getAll()
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
-    requests.collections
-      .getAll()
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err))
+    getCollections()
   }, [])
 
   const handleFile = (file: File) => {
@@ -60,36 +67,48 @@ const CreateNew = () => {
       <Stack spacing={15}>
         <TextInput label="Name" {...form.getInputProps('name')} />
         <Textarea label="Description" {...form.getInputProps('description')} />
-        <FileButton onChange={handleFile} accept="image/png,image/jpeg">
-          {(props) => (
-            <Button
-              {...props}
-              sx={{ width: 'min-content' }}
-              radius="md"
-              variant="light"
-              color="gray"
-              leftIcon={<ArrowUpTrayIcon width={18} />}
-              style={{ fontWeight: 500, fontSize: 13 }}
-            >
-              Select an image
-            </Button>
-          )}
-        </FileButton>
-        {file?.preview && (
-          <Image
-            src={file.preview}
-            width={100}
-            height={100}
-            alt=""
-            objectFit="contain"
-          />
-        )}
         <NumberInput label="Price" {...form.getInputProps('price')} />
         <Select
           label="Collection"
           data={[{ label: 'Photography', value: '1' }]}
           {...form.getInputProps('collection')}
         />
+        <Group>
+          <FileButton onChange={handleFile} accept="image/png,image/jpeg">
+            {(props) => (
+              <Button
+                {...props}
+                sx={{ width: 'min-content' }}
+                radius="md"
+                variant="light"
+                color="gray"
+                leftIcon={<ArrowUpTrayIcon width={18} />}
+                style={{ fontWeight: 500, fontSize: 13 }}
+              >
+                Select an image
+              </Button>
+            )}
+          </FileButton>
+          {file?.file && (
+            <ActionIcon
+              variant="light"
+              size={52}
+              color="red"
+              onClick={() => setFile(null)}
+            >
+              <TrashIcon width={18} />
+            </ActionIcon>
+          )}
+        </Group>
+        {file?.preview && (
+          <AspectRatio
+            ratio={4 / 5.2}
+            sx={{ borderRadius: 20, overflow: 'hidden' }}
+          >
+            <Image src={file.preview} layout="fill" alt="" objectFit="cover" />
+          </AspectRatio>
+        )}
+
         <Button type="submit" size="xs" p="sm">
           Create
         </Button>
