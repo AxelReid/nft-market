@@ -18,6 +18,10 @@ import TimerIcon from './TimerIcon'
 import { HeartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/24/solid'
 import Link from 'next/link'
+import { useTimer } from 'react-timer-hook'
+import timeFormatter from 'utils/timeFormatter'
+import useMyTimer from 'utils/timeFormatter'
+import { Asset } from 'types/data'
 
 const useStyles = createStyles((theme, _, getRef) => ({
   img: {
@@ -34,19 +38,13 @@ const useStyles = createStyles((theme, _, getRef) => ({
   },
 }))
 
-interface Props {
-  name: string
-  price: string
-  image: string
-  time_left: string
-  liked: boolean
-  likes: number
-  biddings: { name: string; avatar?: string }[]
+interface Props extends Asset {
   truncate?: boolean
   card_type?: 'big' | 'middle' | 'small'
 }
 
 const MyCard = ({
+  slug,
   liked,
   likes,
   name,
@@ -60,6 +58,7 @@ const MyCard = ({
   const { colorScheme } = useMantineColorScheme()
   const { classes, cx } = useStyles()
   const [isHover, setIsHover] = useState(false)
+  const { result, expired } = useMyTimer(time_left)
 
   const Price = () => (
     <Badge
@@ -68,7 +67,7 @@ const MyCard = ({
       radius={6}
       style={{ width: 'fit-content' }}
     >
-      {price}
+      {price} ETH
     </Badge>
   )
 
@@ -92,23 +91,30 @@ const MyCard = ({
             ? 2.1 / 3.5
             : 1 / 1
         }
-        sx={{
-          width: card_type === 'small' ? 250 : '100%',
-          borderRadius: 20,
-        }}
+        sx={{ width: card_type === 'small' ? 250 : '100%' }}
       >
-        <Link href="/nft/1">
-          <a style={{ borderRadius: 20 }}>
-            <Image
-              src={image}
-              layout="fill"
-              alt=""
-              className={cx(classes.img, { [classes.hoverImg]: !!isHover })}
-              onMouseEnter={() => setIsHover(true)}
-              onMouseLeave={() => setIsHover(false)}
-            />
-          </a>
-        </Link>
+        <Card
+          p={0}
+          radius={20}
+          sx={(theme) => ({
+            background:
+              theme.colorScheme === 'light' ? theme.colors.gray[1] : '',
+          })}
+        >
+          <Link href={'/nft/' + slug}>
+            <a>
+              <Image
+                src={image || ''}
+                layout="fill"
+                alt=""
+                objectFit="cover"
+                className={cx(classes.img, { [classes.hoverImg]: !!isHover })}
+                onMouseEnter={() => setIsHover(true)}
+                onMouseLeave={() => setIsHover(false)}
+              />
+            </a>
+          </Link>
+        </Card>
       </AspectRatio>
       <Box
         mt={card_type !== 'small' ? 'xl' : 0}
@@ -116,7 +122,7 @@ const MyCard = ({
       >
         <Grid>
           <Col span="auto">
-            <Link href="/nft/1" passHref>
+            <Link href={'/nft/' + slug} passHref>
               <Text
                 component="a"
                 size={20}
@@ -131,27 +137,35 @@ const MyCard = ({
               </Text>
             </Link>
           </Col>
-          {card_type === 'big' && (
+          {card_type === 'big' && !expired && (
             <Col span="content">
               <Price />
             </Col>
           )}
         </Grid>
-        <Group
-          my={card_type === 'small' ? 5 : 24}
-          spacing="sm"
-          align="center"
-          position="apart"
-        >
-          <Group spacing="sm">
-            <TimerIcon width={18} />
-            <Text weight={400} size={14} mt={5}>
-              {time_left} {card_type !== 'small' && 'mins left'}
-            </Text>
+        {!expired && (
+          <Group
+            mt={card_type === 'small' ? 5 : 24}
+            mb={card_type === 'small' ? 5 : 24}
+            spacing="sm"
+            align="center"
+            position="apart"
+          >
+            <Group spacing="sm">
+              <TimerIcon width={18} />
+              <Text weight={400} size={14} mt={5}>
+                {result}{' '}
+                {card_type === 'big'
+                  ? 'mins left'
+                  : card_type === 'middle'
+                  ? 'left'
+                  : ''}
+              </Text>
+            </Group>
+            {card_type !== 'big' && <Price />}
           </Group>
-          {card_type !== 'big' && <Price />}
-        </Group>
-        {card_type !== 'small' && <Divider />}
+        )}
+        {card_type !== 'small' && <Divider mt={10} />}
         <Group pt={card_type === 'small' ? 5 : 'md'} position="apart">
           <Group align="center">
             {card_type === 'big' && (
@@ -168,12 +182,16 @@ const MyCard = ({
                 ))}
               </Avatar.Group>
             )}
-            {biddings?.length > 0 && (
-              <Text weight={400} size={14} color="dimmed">
-                {biddings.length}{' '}
-                {biddings.length > 1 ? 'people are' : 'person is'} bidding
-              </Text>
-            )}
+            <Text weight={400} size={14} color="dimmed">
+              {biddings?.length > 0 ? (
+                <>
+                  {biddings.length}{' '}
+                  {biddings.length > 1 ? 'people are' : 'person is'} bidding
+                </>
+              ) : (
+                'No biddings yet'
+              )}
+            </Text>
           </Group>
           <Group align="center" spacing={8}>
             {liked ? (

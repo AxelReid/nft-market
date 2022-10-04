@@ -1,10 +1,15 @@
 import { Button, Grid, Group, Text } from '@mantine/core'
 import Wrapper from '../containers/Wrapper'
-import React from 'react'
+import React, { useEffect } from 'react'
 import MyCard from './MyCard'
-import dummy from 'data/dummy'
+import { useQuery } from '@tanstack/react-query'
+import requests from 'requests'
 
 const Filter = () => {
+  const { isLoading, error, data } = useQuery(['filter'], () =>
+    requests.assets.getAll()
+  )
+
   return (
     <Wrapper mt={100}>
       <div>
@@ -35,8 +40,8 @@ const Filter = () => {
         </Group>
       </div>
       <Grid gutter={0} mt={80}>
-        {dummy.map((dum, i) => (
-          <Grid.Col span={6} sm={4} md={3} lg={2} key={i}>
+        {data?.data.map((dum) => (
+          <Grid.Col span={6} sm={4} md={3} lg={2} key={dum.id}>
             <MyCard {...dum} card_type="middle" truncate />
           </Grid.Col>
         ))}

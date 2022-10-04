@@ -31,6 +31,7 @@ import {
 import Wrapper from 'containers/Wrapper'
 import Logo from 'components/Logo'
 import BgImg from 'components/BgImg'
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 
 interface Values {
   email: string
@@ -69,7 +70,6 @@ const SignIn = () => {
       password: '',
       password2: '',
       biograph: '',
-      terms: true,
     },
 
     validate: {
@@ -100,14 +100,24 @@ const SignIn = () => {
           maxAge: 60 * 6 * 24,
           secure: true,
         })
+
         router.push('/dashboard')
       } else {
         const formData = new FormData()
         formData.set('email', values.email)
         formData.set('username', values.username)
-        formData.set('password', values.email)
+        formData.set('password', values.password)
         formData.set('password2', values.password2)
-        if (file?.file) formData.set('avatar', file.file || '')
+        formData.set('biograph', values.biograph)
+        if (!file?.file) {
+          showNotification({
+            color: 'yellow',
+            message: 'Please choose an avatar image',
+          })
+          setLoading(false)
+          return
+        }
+        formData.set('avatar', file.file || '')
 
         await requests.auth.signup(formData)
 
@@ -124,7 +134,7 @@ const SignIn = () => {
       }
     } catch (error: any) {
       showNotification({
-        message: error?.message,
+        message: error?.response?.data?.detail || error?.message,
         color: 'red',
       })
     }
@@ -202,36 +212,48 @@ const SignIn = () => {
                     placeholder="Enter a bit about yourself"
                     {...form.getInputProps('biograph')}
                   />
-                  <Group>
-                    <FileButton
-                      onChange={handleFile}
-                      accept="image/png,image/jpeg"
+                  <div>
+                    <Text
+                      weight={500}
+                      size={14}
+                      mb={3}
+                      sx={(theme) => ({
+                        color:
+                          theme.colorScheme === 'dark' ? '#c1c2c5' : '#212529',
+                      })}
                     >
-                      {(props) => (
-                        <Button
-                          {...props}
-                          sx={{ width: 'min-content' }}
-                          radius="md"
-                          variant="light"
-                          color="gray"
-                          leftIcon={<ArrowUpTrayIcon width={18} />}
-                          style={{ fontWeight: 500, fontSize: 13 }}
-                        >
-                          Select an avatar
-                        </Button>
-                      )}
-                    </FileButton>
-                    {file?.file && (
-                      <ActionIcon
+                      Avatar
+                    </Text>
+
+                    {file?.file ? (
+                      <Button
                         variant="light"
-                        size={52}
                         color="red"
                         onClick={() => setFile(null)}
+                        leftIcon={<TrashIcon width={18} />}
+                        fullWidth
                       >
-                        <TrashIcon width={18} />
-                      </ActionIcon>
+                        Remove image
+                      </Button>
+                    ) : (
+                      <Dropzone
+                        onDrop={(files) => handleFile(files[0])}
+                        onReject={(files) =>
+                          console.log('rejected files', files)
+                        }
+                        accept={IMAGE_MIME_TYPE}
+                      >
+                        <Center>
+                          <Group py="xl">
+                            <ArrowUpTrayIcon width={18} />
+                            <Text color="dimmed" size={14}>
+                              Select or Drop an image
+                            </Text>
+                          </Group>
+                        </Center>
+                      </Dropzone>
                     )}
-                  </Group>
+                  </div>
                   {file?.preview && (
                     <Center>
                       <Image
@@ -244,11 +266,6 @@ const SignIn = () => {
                       />
                     </Center>
                   )}
-                  <Checkbox
-                    label="I accept terms and conditions"
-                    checked={form.values.terms}
-                    {...form.getInputProps('terms')}
-                  />
                 </>
               )}
             </Stack>

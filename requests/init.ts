@@ -1,5 +1,5 @@
 import { showNotification } from '@mantine/notifications'
-import axios, { AxiosError, AxiosRequestConfig } from 'axios'
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { getCookie, removeCookies } from 'cookies-next'
 import { BASE_URL } from './constants'
 
@@ -49,7 +49,7 @@ const init = {
     url: string,
     params?: {},
     data?: any
-  ) {
+  ): Promise<any> {
     const token = getCookie('token')
     let config: AxiosRequestConfig = {
       baseURL: BASE_URL,
@@ -76,7 +76,7 @@ const init = {
 
     return new Promise((resolve, reject) => {
       result
-        .then((res) => {
+        .then((res: AxiosResponse) => {
           resolve(res.data)
         })
         .catch((error: AxiosError) => {
@@ -88,7 +88,7 @@ const init = {
   get(url: string, params?: {}) {
     return this.request('GET', url, params, undefined)
   },
-  post(url: string, params?: {}, data?: any) {
+  post(url: string, data: any, params?: {}) {
     return this.request('POST', url, params, data)
   },
   put(url: string, params?: {}, data?: any) {

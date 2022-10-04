@@ -1,17 +1,20 @@
 import React from 'react'
 import { Grid } from '@mantine/core'
 import TitleBar from 'components/TitleBar'
-import dummy from 'data/dummy'
 import MyCard from 'components/MyCard'
+import { useQuery } from '@tanstack/react-query'
+import requests from 'requests'
 
 const MyBiddings = () => {
+  const { data } = useQuery(['my_biddings'], () => requests.user.myBiddings())
+
   return (
     <div>
       <TitleBar title="My Biddings" desc="The assets I have bidded" />
       <Grid gutter={0}>
-        {dummy.slice(0, 4).map((dum, i) => (
-          <Grid.Col span={6} sm={4} md={3} lg={2} key={i}>
-            <MyCard {...dum} card_type="middle" truncate />
+        {data?.data?.map((dum) => (
+          <Grid.Col span={6} sm={4} md={3} lg={2} key={dum.project.id}>
+            <MyCard {...dum.project} card_type="middle" truncate />
           </Grid.Col>
         ))}
       </Grid>

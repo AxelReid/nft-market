@@ -5,9 +5,15 @@ import MyCard from 'components/MyCard'
 import TitleBar from 'components/TitleBar'
 import dummy from 'data/dummy'
 import CreateNew from './CreateNew'
+import { Asset } from 'types/data'
+import { useQuery } from '@tanstack/react-query'
+import requests from 'requests'
 
 const MyAssets = () => {
   const [opened, setOpened] = useState(false)
+  const { data, refetch } = useQuery(['my_assets'], () =>
+    requests.user.myAssets()
+  )
 
   return (
     <>
@@ -16,7 +22,7 @@ const MyAssets = () => {
         onClose={() => setOpened(false)}
         title="Create a new asset"
       >
-        <CreateNew />
+        <CreateNew close={() => setOpened(false)} refetch={refetch} />
       </Modal>
       <div>
         <TitleBar title="My Assets" desc="My assets that I have created" />
@@ -29,8 +35,8 @@ const MyAssets = () => {
           Create a new asset
         </Button>
         <Grid gutter={0}>
-          {dummy.slice(0, 4).map((dum, i) => (
-            <Grid.Col span={6} sm={4} md={3} lg={2} key={i}>
+          {data?.map((dum) => (
+            <Grid.Col span={6} sm={4} md={3} lg={2} key={dum.id}>
               <MyCard {...dum} card_type="middle" truncate />
             </Grid.Col>
           ))}

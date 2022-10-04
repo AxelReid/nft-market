@@ -1,35 +1,74 @@
 import React from 'react'
-import { Avatar, Center, Divider, Group, Stack, Text } from '@mantine/core'
+import { Avatar, Button, Center, Group, Stack, Text } from '@mantine/core'
 import {
   HeartIcon,
   ArchiveBoxIcon,
   BanknotesIcon,
   ShoppingCartIcon,
+  ArrowLeftOnRectangleIcon,
 } from '@heroicons/react/24/outline'
+import { removeCookies } from 'cookies-next'
+import { useRouter } from 'next/router'
+import { useQuery } from '@tanstack/react-query'
+import requests from 'requests'
+import { BASE_URL } from 'requests/constants'
 
 const Profile = () => {
+  const router = useRouter()
+  const { data } = useQuery(['me'], () => requests.auth.me())
+
   return (
     <div>
       <Center mb={10} mt={70}>
-        <Avatar variant="light" size={150} radius={100}>
+        <Avatar
+          src={BASE_URL + '/images/' + data?.avatar}
+          variant="light"
+          size={150}
+          radius={100}
+        >
           A
         </Avatar>
       </Center>
       <Text weight={600} size={50} align="center">
-        Asilbek
+        {data?.name}
       </Text>
+      <Text color="dimmed" align="center" size="sm">
+        {data?.biograph}
+      </Text>
+      <Center>
+        <Button
+          leftIcon={<ArrowLeftOnRectangleIcon width={20} />}
+          onClick={() => {
+            removeCookies('token')
+            router.push('/sign-in')
+          }}
+          color="red"
+          variant="light"
+          mt={20}
+        >
+          Logout
+        </Button>
+      </Center>
       <Group mt={30} position="center" align="center" spacing={100}>
-        <Item icon={<HeartIcon width={30} />} name="Wishlists" value={4} />
+        <Item
+          icon={<HeartIcon width={30} />}
+          name="Wishlists"
+          value={data?.wishlist_count || 0}
+        />
         <Item
           icon={<ShoppingCartIcon width={30} />}
           name="Biddings"
-          value={15}
+          value={data?.biddings_count || 0}
         />
-        <Item icon={<ArchiveBoxIcon width={30} />} name="Assets" value={8} />
+        <Item
+          icon={<ArchiveBoxIcon width={30} />}
+          name="Assets"
+          value={data?.assets_count || 0}
+        />
         <Item
           icon={<BanknotesIcon width={30} />}
           name="Total spent"
-          value={'12.3K'}
+          value={data?.total_spent || 0 + ' K'}
         />
       </Group>
     </div>

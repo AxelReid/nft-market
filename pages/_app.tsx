@@ -14,6 +14,7 @@ import { GetServerSidePropsContext } from 'next'
 import { getCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import MyGlobalStyles from 'styles/MyGlobalStyles'
+import { NotificationsProvider } from '@mantine/notifications'
 
 const queryClient = new QueryClient()
 
@@ -122,8 +123,10 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
           withGlobalStyles
           withNormalizeCSS
         >
-          <MyGlobalStyles />
-          <Component {...pageProps} />
+          <NotificationsProvider>
+            <MyGlobalStyles />
+            <Component {...pageProps} />
+          </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </QueryClientProvider>

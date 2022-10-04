@@ -1,12 +1,17 @@
 import { ScrollArea, useMantineColorScheme } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import React from 'react'
+import { AssetHistory } from 'types/data'
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
   loading: () => null,
 })
 
-const LineChartHistory = () => {
+interface Props {
+  history: AssetHistory[] | undefined
+}
+
+const LineChartHistory = ({ history }: Props) => {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
@@ -14,10 +19,15 @@ const LineChartHistory = () => {
   const cl2 = '#7780A1'
   const bCl = dark ? '#262840' : '#E2E2ED'
 
+  const data = history?.map((val) => val.price) || []
+  const categories = history?.map((val) =>
+    new Date(val.date).toLocaleTimeString()
+  )
+
   const series: ApexAxisChartSeries | ApexNonAxisChartSeries = [
     {
       name: 'ETH',
-      data: [1, 1.5, 2, 2.55, 2.6],
+      data,
       color: lineCl,
     },
   ]
@@ -48,7 +58,7 @@ const LineChartHistory = () => {
     },
     xaxis: {
       type: 'category',
-      categories: ['12:00', '13:00', '14:00', '15:00', '16:00'],
+      categories,
       tooltip: { enabled: false },
       axisBorder: { show: false },
       axisTicks: { show: false },

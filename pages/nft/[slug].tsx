@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import {
-  HeartIcon,
   ClipboardIcon,
+  HeartIcon,
   ShareIcon,
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartFilledIcon } from '@heroicons/react/24/solid'
@@ -28,6 +28,11 @@ import MyFooter from 'components/MyFooter'
 import useTxtStyles from 'styles/useTxtStyles'
 import IOSCard from 'components/IOSCard'
 import LineChartHistory from 'components/LineChartHistory'
+import { NextPage } from 'next'
+import requests from 'requests'
+import { useRouter } from 'next/router'
+import { useQuery } from '@tanstack/react-query'
+import { BASE_URL } from 'requests/constants'
 
 const useStyles = createStyles((theme) => ({
   box: {
@@ -44,11 +49,16 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const NftDetails = () => {
+const NftDetails: NextPage = () => {
+  const router = useRouter()
+  const slug = router.query?.slug
+
   const { classes } = useTxtStyles()
   const { classes: cls } = useStyles()
   const { colorScheme } = useMantineColorScheme()
   const ioscolors = colorScheme === 'light' ? ['#F2F3F6', '#F2F3F6'] : undefined
+
+  const { data } = useQuery(['asset'], () => requests.assets.getOne(slug))
 
   return (
     <div>
@@ -65,7 +75,13 @@ const NftDetails = () => {
         >
           <Box sx={{ position: 'absolute', top: 40, right: -28 }}>
             <Btn
-              icon={<HeartFilledIcon width={22} color="red" />}
+              icon={
+                data?.date.liked ? (
+                  <HeartFilledIcon width={22} color="red" />
+                ) : (
+                  <HeartIcon width={22} />
+                )
+              }
               cl={classes.secondaryColor}
             />
             <Space h={16} />
@@ -78,15 +94,22 @@ const NftDetails = () => {
           </Box>
           <Grid>
             <Grid.Col span={11} xs={7} sm={5}>
-              <AspectRatio
-                ratio={4 / 5.2}
-                sx={{ borderRadius: 20, overflow: 'hidden' }}
-              >
-                <Image
-                  src="https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80"
-                  layout="fill"
-                  alt=""
-                />
+              <AspectRatio ratio={4 / 5.2}>
+                <Card
+                  radius={20}
+                  p={0}
+                  sx={(theme) => ({
+                    background:
+                      theme.colorScheme === 'light' ? theme.colors.gray[1] : '',
+                  })}
+                >
+                  <Image
+                    src={BASE_URL + '/' + data?.date.image}
+                    layout="fill"
+                    objectFit="cover"
+                    alt=""
+                  />
+                </Card>
               </AspectRatio>
             </Grid.Col>
             <Grid.Col span={12} sm={7}>
@@ -95,7 +118,7 @@ const NftDetails = () => {
                   weight={600}
                   sx={{ fontSize: 'min(40px,6vw)', lineHeight: 1.2 }}
                 >
-                  Dui accumsan leo vestibulum ornare
+                  {data?.date.name}
                 </Text>
                 <Text
                   className={classes.secondaryColor}
@@ -104,19 +127,19 @@ const NftDetails = () => {
                   weight={400}
                   size={16}
                 >
-                  Ut amet vulputate faucibus vitae semper eget auctor. Diam
-                  tempor pulvinar ultricies dolor feugiat aliquam commodo.
+                  {data?.date.description}
                 </Text>
                 <Group>
                   <Creator
                     cl={classes.secondaryColor}
+                    src={BASE_URL + '/' + data?.date.creator.avatar}
                     title="creator"
-                    name="asilbek"
+                    name={data?.date.creator.name || ''}
                   />
                   <Creator
                     cl={classes.secondaryColor}
                     title="collection"
-                    name="nothing"
+                    name={data?.date.collection.name || ''}
                   />
                 </Group>
                 <IOSCard
@@ -134,7 +157,7 @@ const NftDetails = () => {
                       </Text>
                       <Group noWrap align="baseline" spacing="sm">
                         <Text weight={600} size={55} sx={{ lineHeight: 1 }}>
-                          5.25
+                          {data?.date.price}
                         </Text>
                         <Text weight={600} size={24}>
                           ETH
@@ -159,9 +182,10 @@ const NftDetails = () => {
                 </IOSCard>
                 <Box mt={40}></Box>
                 <Text weight={400} size={14} className={classes.secondaryColor}>
-                  History of bids (12 people are bidding)
+                  History of bids ({data?.date.history.total} people are
+                  bidding)
                 </Text>
-                <LineChartHistory />
+                <LineChartHistory history={data?.date.history?.data} />
               </Box>
             </Grid.Col>
           </Grid>

@@ -4,8 +4,12 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const response = NextResponse.next()
 
-  // const token = request.cookies.get('token')
-  // if (!token) return NextResponse.redirect(new URL('/sign-in', request.url))
+  const token = request.cookies.get('token')
+
+  if (!token) return NextResponse.redirect(new URL('/sign-in', request.url))
+  // if (token && request.nextUrl.pathname === '/sign-in') {
+  //   return NextResponse.redirect(new URL('/dashboard', request.url))
+  // }
   // if (request.nextUrl.pathname.startsWith('/dashboard/seller')) {
   //   return NextResponse.redirect(new URL('/dashboard', request.url))
   // }
