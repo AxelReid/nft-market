@@ -1,18 +1,24 @@
 import { Text } from '@mantine/core'
+import { useQuery } from '@tanstack/react-query'
 import WrapperFull from 'containers/WrapperFull'
 import dummy from 'data/dummy'
 import React from 'react'
+import requests from 'requests'
 import MyCard from './MyCard'
 import MyCarousel, { MyCarouselSlide } from './MyCarousel'
 
 const SliderBigCard = () => {
+  const { data } = useQuery(['slider_big'], () =>
+    requests.assets.getAll("?sort='popular'")
+  )
+
   return (
     <WrapperFull noEdge>
       <Text align="center" size={36} weight={600} mb={96}>
         Latest live auctions
       </Text>
       <MyCarousel>
-        {dummy.map((dum, i) => (
+        {data?.data.map((dum, i) => (
           <MyCarouselSlide key={i} size={400}>
             <MyCard {...dum} />
           </MyCarouselSlide>
