@@ -1,7 +1,6 @@
 import { Text } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 import WrapperFull from 'containers/WrapperFull'
-import dummy from 'data/dummy'
 import React from 'react'
 import requests from 'requests'
 import MyCard from './MyCard'
