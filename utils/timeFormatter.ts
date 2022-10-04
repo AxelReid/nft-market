@@ -21,7 +21,7 @@ export default useMyTimer
 
 export const timeFormatter = (d: number, h: number, m: number, s: number) => {
   const format = (n: number, l: string) =>
-    n > 0 ? (n > 1 ? `${n}${l}s ` : l + ' ') : ''
+    n > 0 ? (n > 1 ? `${n}${l}s ` : n + l + ' ') : ''
 
   return `${format(h + d * 24, 'hr')}${m}:${s > 9 ? s : '0' + s}`
 }

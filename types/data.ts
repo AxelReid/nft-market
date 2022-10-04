@@ -2,7 +2,7 @@ export interface Asset {
   id: number
   slug: string
   name: string
-  price: string
+  price: number
   time_left: string
   likes: number
   liked: boolean

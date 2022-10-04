@@ -4,11 +4,11 @@ import { Asset, AssetDetails } from 'types/data'
 
 const assets = {
   getOne: (slug: any): Promise<{ date: AssetDetails }> =>
-    request.get('/projects/assets/' + slug).then((res) => res.data),
+    init.get('/projects/assets/' + slug),
   getAll: (params?: string): Promise<{ data: Asset[] }> =>
-    request
-      .get(`/projects/assets/projects/all${params || ''}`)
-      .then((res) => res.data),
+    init.get(`/projects/assets/projects/all${params || ''}`),
   create: (data: FormData): any => init.post('/projects/add/', data),
+  bid: (id: number, price: number) =>
+    init.post('/projects/submit/', { id, price }),
 }
 export default assets

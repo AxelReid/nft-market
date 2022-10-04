@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import {
   ClipboardIcon,
@@ -33,6 +33,8 @@ import requests from 'requests'
 import { useRouter } from 'next/router'
 import { useQuery } from '@tanstack/react-query'
 import { BASE_URL } from 'requests/constants'
+import { showNotification } from '@mantine/notifications'
+import useMyTimer from 'utils/timeFormatter'
 
 const useStyles = createStyles((theme) => ({
   box: {
@@ -57,8 +59,50 @@ const NftDetails: NextPage = () => {
   const { classes: cls } = useStyles()
   const { colorScheme } = useMantineColorScheme()
   const ioscolors = colorScheme === 'light' ? ['#F2F3F6', '#F2F3F6'] : undefined
+  const [loading, setLoading] = useState(false)
 
-  const { data } = useQuery(['asset'], () => requests.assets.getOne(slug))
+  const { data, refetch } = useQuery(['asset'], () =>
+    requests.assets.getOne(slug)
+  )
+  const { result, expired } = useMyTimer(data?.date?.time_left!)
+
+  const bid = async () => {
+    setLoading(true)
+    try {
+      const res = await requests.assets.bid(data?.date.id!, data?.date.price!)
+      showNotification({
+        color: res?.success ? 'green' : 'red',
+        message: res.msg,
+      })
+      if (res.success) refetch()
+    } catch (error: any) {
+      console.log(error?.response)
+    }
+    setLoading(false)
+  }
+
+  const addToWish = async () => {
+    const res = await requests.user.addToWish(data?.date.id!)
+    return await res
+  }
+  const removeFromWish = async () => {
+    const res = await requests.user.removeFromWish(data?.date.id!)
+    return await res
+  }
+
+  const handleWish = async (liked: boolean) => {
+    const res = !liked ? await addToWish() : await removeFromWish()
+    showNotification({
+      color: res.success ? 'green' : 'red',
+      message: res?.msg,
+    })
+    refetch()
+  }
+
+  const copy = () => {
+    navigator.clipboard.writeText(location.href)
+    showNotification({ color: 'green', message: 'Copied to clipboard' })
+  }
 
   return (
     <div>
@@ -75,6 +119,7 @@ const NftDetails: NextPage = () => {
         >
           <Box sx={{ position: 'absolute', top: 40, right: -28 }}>
             <Btn
+              click={() => handleWish(data?.date?.liked!)}
               icon={
                 data?.date.liked ? (
                   <HeartFilledIcon width={22} color="red" />
@@ -86,6 +131,7 @@ const NftDetails: NextPage = () => {
             />
             <Space h={16} />
             <Btn
+              click={copy}
               icon={<ClipboardIcon width={20} />}
               cl={classes.secondaryColor}
             />
@@ -153,7 +199,7 @@ const NftDetails: NextPage = () => {
                   <Group position="apart" align="start" mb={25}>
                     <div>
                       <Text weight={400} size={14} color="dimmed" mb={12}>
-                        Current price
+                        {expired ? 'Last' : 'Current'} price
                       </Text>
                       <Group noWrap align="baseline" spacing="sm">
                         <Text weight={600} size={55} sx={{ lineHeight: 1 }}>
@@ -169,14 +215,20 @@ const NftDetails: NextPage = () => {
                         Time left
                       </Text>
                       <Text weight={600} size={24}>
-                        22:59 min
+                        {result}
                       </Text>
                       <Text weight={400} size={14} color="dimmed">
-                        (01.01.2022 - 01:40:47)
+                        ({data?.date.time_left})
                       </Text>
                     </div>
                   </Group>
-                  <Button mt={25} fullWidth>
+                  <Button
+                    mt={25}
+                    fullWidth
+                    loading={loading}
+                    disabled={expired}
+                    onClick={() => bid()}
+                  >
                     Place a bid
                   </Button>
                 </IOSCard>
@@ -185,7 +237,9 @@ const NftDetails: NextPage = () => {
                   History of bids ({data?.date.history.total} people are
                   bidding)
                 </Text>
-                <LineChartHistory history={data?.date.history?.data} />
+                {data?.date?.history?.total! > 0 && (
+                  <LineChartHistory history={data?.date.history?.data} />
+                )}
               </Box>
             </Grid.Col>
           </Grid>
