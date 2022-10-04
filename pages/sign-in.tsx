@@ -294,3 +294,23 @@ const SignIn = () => {
 }
 
 export default SignIn
+// npm install @heroicons/react @mantine/carousel @mantine/core @mantine/dates @mantine/dropzone @mantine/form @mantine/hooks @mantine/next @mantine/notifications @tanstack/react-query apexcharts axios cookies-next next react react-apexcharts react-dom react-timer-hook
+
+//  "@heroicons/react": "^2.0.11",
+//     "@mantine/carousel": "^5.4.2",
+//     "@mantine/core": "^5.4.2",
+//     "@mantine/dates": "^5.5.2",
+//     "@mantine/dropzone": "^5.5.1",
+//     "@mantine/form": "^5.5.0",
+//     "@mantine/hooks": "^5.4.2",
+//     "@mantine/next": "^5.4.2",
+//     "@mantine/notifications": "^5.4.2",
+//     "@tanstack/react-query": "^4.8.0",
+//     "apexcharts": "^3.35.5",
+//     "axios": "^0.27.2",
+//     "cookies-next": "^2.1.1",
+//     "next": "latest",
+//     "react": "18.2.0",
+//     "react-apexcharts": "^1.4.0",
+//     "react-dom": "18.2.0",
+//     "react-timer-hook": "^3.0.5"
