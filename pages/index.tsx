@@ -7,10 +7,10 @@ import Hero from 'components/Hero'
 import WrapperFull from 'containers/WrapperFull'
 import Wrapper from 'containers/Wrapper'
 
-const SliderBigCard = dynamic(() => import('components/SliderBigCard'))
+// const SliderBigCard = dynamic(() => import('components/SliderBigCard'))
 const InkChart = dynamic(() => import('components/InkChart'))
 const PlaneWatch = dynamic(() => import('components/PlaneWatch'))
-const TheHand = dynamic(() => import('components/TheHand'))
+// const TheHand = dynamic(() => import('components/TheHand'))
 const Filter = dynamic(() => import('components/Filter'))
 const Stats = dynamic(() => import('components/Stats'))
 const MyFooter = dynamic(() => import('components/MyFooter'))
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
         <Hero />
       </WrapperFull>
 
-      <SliderBigCard />
+      {/* <SliderBigCard /> */}
       <InkChart />
       {/* <TheHand /> */}
       <PlaneWatch />

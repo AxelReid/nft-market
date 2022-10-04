@@ -6,52 +6,54 @@ import MyCarousel, { MyCarouselSlide } from './MyCarousel'
 import WrapperFull from 'containers/WrapperFull'
 import MyCard from './MyCard'
 import IOSCard from './IOSCard'
+import { useQuery } from '@tanstack/react-query'
+import requests from 'requests'
 
-const data = [
-  {
-    name: 'Vulputate felis purus viverra morbi facilisi eget',
-    price: '1.22 ETH',
-    time_left: '2:41',
-    likes: 321,
-    liked: true,
-    image:
-      'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    biddings: [{ name: 'Asilbek' }, { name: 'Muzaffar' }, { name: 'Nodirbek' }],
-  },
-  {
-    name: 'Vulputate felis purus viverra morbi facilisi eget',
-    price: '1.22 ETH',
-    time_left: '2:41',
-    likes: 321,
-    liked: true,
-    image:
-      'https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+// const data = [
+//   {
+//     name: 'Vulputate felis purus viverra morbi facilisi eget',
+//     price: '1.22 ETH',
+//     time_left: '2:41',
+//     likes: 321,
+//     liked: true,
+//     image:
+//       'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+//     biddings: [{ name: 'Asilbek' }, { name: 'Muzaffar' }, { name: 'Nodirbek' }],
+//   },
+//   {
+//     name: 'Vulputate felis purus viverra morbi facilisi eget',
+//     price: '1.22 ETH',
+//     time_left: '2:41',
+//     likes: 321,
+//     liked: true,
+//     image:
+//       'https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
 
-    biddings: [{ name: 'Asilbek' }, { name: 'Muzaffar' }, { name: 'Nodirbek' }],
-  },
-  {
-    name: 'Vulputate felis purus viverra morbi facilisi eget',
-    price: '1.22 ETH',
-    time_left: '2:41',
-    likes: 321,
-    liked: true,
-    image:
-      'https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+//     biddings: [{ name: 'Asilbek' }, { name: 'Muzaffar' }, { name: 'Nodirbek' }],
+//   },
+//   {
+//     name: 'Vulputate felis purus viverra morbi facilisi eget',
+//     price: '1.22 ETH',
+//     time_left: '2:41',
+//     likes: 321,
+//     liked: true,
+//     image:
+//       'https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
 
-    biddings: [{ name: 'Asilbek' }, { name: 'Muzaffar' }, { name: 'Nodirbek' }],
-  },
-  {
-    name: 'Vulputate felis purus viverra morbi facilisi eget',
-    price: '1.22 ETH',
-    time_left: '2:41',
-    likes: 321,
-    liked: true,
-    image:
-      'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+//     biddings: [{ name: 'Asilbek' }, { name: 'Muzaffar' }, { name: 'Nodirbek' }],
+//   },
+//   {
+//     name: 'Vulputate felis purus viverra morbi facilisi eget',
+//     price: '1.22 ETH',
+//     time_left: '2:41',
+//     likes: 321,
+//     liked: true,
+//     image:
+//       'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
 
-    biddings: [{ name: 'Asilbek' }, { name: 'Muzaffar' }, { name: 'Nodirbek' }],
-  },
-]
+//     biddings: [{ name: 'Asilbek' }, { name: 'Muzaffar' }, { name: 'Nodirbek' }],
+//   },
+// ]
 
 const useStyles = createStyles((theme) => ({
   absoluteHand: {
@@ -76,6 +78,12 @@ const useStyles = createStyles((theme) => ({
 
 const TheHand = () => {
   const { classes } = useStyles()
+  const { data: dataDesc } = useQuery(['slider_big'], () =>
+    requests.assets.getAll('?sort=desc')
+  )
+  const { data: dataPop } = useQuery(['slider_big'], () =>
+    requests.assets.getAll('?sort=popular')
+  )
 
   return (
     <WrapperFull noEdge>
@@ -98,7 +106,7 @@ const TheHand = () => {
               loop
               draggable={false}
             >
-              {data.map((dt, i) => (
+              {dataPop?.data?.map((dt, i) => (
                 <MyCarouselSlide key={i} size={175}>
                   <MyCard {...dt} card_type="middle" truncate />
                 </MyCarouselSlide>
@@ -140,7 +148,7 @@ const TheHand = () => {
         <MyCarouselSlide size={440} pt={50}>
           <Slide title="Top NFT at a lower price">
             <Stack spacing={15} px={40} mb={45}>
-              {data.map((dt, i) => (
+              {dataDesc?.data?.map((dt, i) => (
                 <MyCard key={i} {...dt} card_type="small" truncate />
               ))}
             </Stack>

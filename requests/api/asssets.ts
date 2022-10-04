@@ -7,7 +7,7 @@ const assets = {
     request.get('/projects/assets/' + slug).then((res) => res.data),
   getAll: (params?: string): Promise<{ data: Asset[] }> =>
     request
-      .get(`/projects/assets/projects/all${params}`)
+      .get(`/projects/assets/projects/all${params || ''}`)
       .then((res) => res.data),
   create: (data: FormData): any => init.post('/projects/add/', data),
 }
