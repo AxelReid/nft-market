@@ -226,7 +226,7 @@ const NftDetails: NextPage = () => {
                     mt={25}
                     fullWidth
                     loading={loading}
-                    disabled={expired}
+                    // disabled={expired}
                     onClick={() => bid()}
                   >
                     Place a bid
