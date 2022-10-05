@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useTimer } from 'react-timer-hook'
+import dayjs from 'dayjs'
 
 const useMyTimer = (time: string, onCancel?: () => {}) => {
   const { seconds, minutes, hours, days } = useTimer({
@@ -24,4 +25,11 @@ export const timeFormatter = (d: number, h: number, m: number, s: number) => {
     n > 0 ? (n > 1 ? `${n}${l}s ` : n + l + ' ') : ''
 
   return `${format(h + d * 24, 'hr')}${m}:${s > 9 ? s : '0' + s}`
+}
+
+export const time_left = (date: Date, time: Date) => {
+  const MDY = dayjs(date).format('MM.DD.YYYY')
+  const HMS = dayjs(time).format('HH:mm:ss')
+
+  return `${MDY} ${HMS}`
 }

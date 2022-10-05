@@ -3,6 +3,8 @@ export interface LoginReqBody {
   password: string
 }
 export interface GetAllParams {
-  collection: string
-  search: string
+  collection?: 'Games' | 'Photography' | 'Music' | 'Architecture' | string
+  search?: string
+  page_size?: number
+  sort?: 'new' | 'asc' | 'desc' | 'popular'
 }

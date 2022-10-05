@@ -12,9 +12,11 @@ const MyBiddings = () => {
     <div>
       <TitleBar title="My Biddings" desc="The assets I have bidded" />
       <Grid gutter={0}>
-        {data?.data?.map((dum) => (
-          <Grid.Col span={6} sm={4} md={3} lg={2} key={dum.project.id}>
-            <MyCard {...dum.project} card_type="middle" truncate />
+        {data?.map(({ project }) => (
+          <Grid.Col span={6} sm={4} md={3} lg={2} key={project.id}>
+            <>
+              <MyCard {...project} card_type="middle" truncate />
+            </>
           </Grid.Col>
         ))}
       </Grid>

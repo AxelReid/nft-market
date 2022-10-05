@@ -19,6 +19,7 @@ import requests from 'requests'
 import { showNotification } from '@mantine/notifications'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import { DatePicker, TimeInput } from '@mantine/dates'
+import { time_left } from 'utils/timeFormatter'
 
 const CreateNew = ({
   close,
@@ -60,20 +61,17 @@ const CreateNew = ({
     description: string
     price: string
     collection: string
-    date: string
-    time: string
+    date: Date | null
+    time: Date | null
   }) => {
-    const time_left =
-      new Date(values.date).toLocaleDateString() +
-      ' ' +
-      new Date(values.time).toLocaleTimeString()
+    const willExpire = time_left(values.date!, values.time!)
 
     const formData = new FormData()
     formData.set('name', values.name)
     formData.set('description', values.description)
     formData.set('price', values.price)
     formData.set('collection', values.collection)
-    formData.set('time_left', time_left)
+    formData.set('time_left', willExpire)
     if (!file?.file) {
       showNotification({
         color: 'yellow',
@@ -101,8 +99,8 @@ const CreateNew = ({
       description: '',
       price: '',
       collection: '',
-      date: '',
-      time: '',
+      date: null,
+      time: null,
     },
     validate: {
       name: (val) => (!val ? 'Enter a name' : null),
@@ -194,7 +192,7 @@ const CreateNew = ({
           </AspectRatio>
         )}
 
-        <Button type="submit" size="xs" p="sm" loading={loading}>
+        <Button type="submit" loading={loading}>
           Create
         </Button>
       </Stack>

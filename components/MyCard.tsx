@@ -41,6 +41,7 @@ const useStyles = createStyles((theme, _, getRef) => ({
 interface Props extends Asset {
   truncate?: boolean
   card_type?: 'big' | 'middle' | 'small'
+  bottomSection?: React.ReactNode
 }
 
 const MyCard = ({
@@ -54,6 +55,7 @@ const MyCard = ({
   biddings,
   truncate,
   card_type = 'big',
+  bottomSection,
 }: Props) => {
   const { colorScheme } = useMantineColorScheme()
   const { classes, cx } = useStyles()
@@ -207,6 +209,7 @@ const MyCard = ({
           </Group>
         </Group>
       </Box>
+      {expired && bottomSection}
     </Card>
   )
 }
