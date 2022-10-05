@@ -30,7 +30,7 @@ import MyFooter from 'components/MyFooter'
 import useTxtStyles from 'styles/useTxtStyles'
 import IOSCard from 'components/IOSCard'
 import LineChartHistory from 'components/LineChartHistory'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import requests from 'requests'
 import { useRouter } from 'next/router'
 import { BASE_URL } from 'requests/constants'
@@ -381,3 +381,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     throw new Error(`Failed to fetch an asset`)
   }
 }
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//   const carSlug = params?.slug
+//   try {
+//     const asset = await requests.assets.getOne(carSlug)
+
+//     return {
+//       props: {
+//         data: asset?.date,
+//       },
+//     }
+//   } catch (error) {
+//     return {
+//       props: {
+//         data: {},
+//       },
+//     }
+//   }
+// }

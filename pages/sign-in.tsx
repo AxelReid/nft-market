@@ -101,7 +101,7 @@ const SignIn = () => {
           secure: true,
         })
 
-        router.push('/dashboard')
+        await router.push('/dashboard')
       } else {
         const formData = new FormData()
         formData.set('email', values.email)

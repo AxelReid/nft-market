@@ -58,7 +58,12 @@ const MyAssets = () => {
                 truncate
                 bottomSection={
                   <Box mt="xs">
-                    <Button mt="xs" fullWidth onClick={() => setOpened2(dt.id)}>
+                    <Button
+                      mt="xs"
+                      variant="light"
+                      fullWidth
+                      onClick={() => setOpened2(dt.id)}
+                    >
                       New Auction
                     </Button>
                   </Box>
