@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTimer } from 'react-timer-hook'
 import dayjs from 'dayjs'
 
@@ -7,14 +7,21 @@ const useMyTimer = (time: string, onCancel?: () => {}) => {
     expiryTimestamp: new Date(time),
     onExpire: () => {},
   })
-  const result = useMemo(
-    () => timeFormatter(days, hours, minutes, seconds),
-    [days, hours, minutes, seconds]
-  )
-  const expired = useMemo(
-    () => days < 1 && minutes < 1 && seconds < 1,
+  const [result, setResult] = useState('')
+  const [expired, setExpired] = useState(false)
+
+  const handleExpired = useCallback(
+    () => setExpired(days < 1 && minutes < 1 && seconds < 1),
     [days, minutes, seconds]
   )
+  const handleResult = useCallback(
+    () => setResult(timeFormatter(days, hours, minutes, seconds)),
+    [days, hours, minutes, seconds]
+  )
+  useEffect(() => {
+    handleResult()
+    handleExpired()
+  }, [days, hours, minutes, seconds])
 
   return { result, expired }
 }

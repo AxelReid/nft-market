@@ -68,7 +68,7 @@ const Profile = () => {
         <Item
           icon={<BanknotesIcon width={30} />}
           name="Total spent"
-          value={(data?.total_spent || 0) + ' ETH'}
+          value={Number(data?.total_spent || 0).toFixed(2) + ' ETH'}
         />
       </Group>
     </div>

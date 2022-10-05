@@ -1,4 +1,4 @@
-import { ScrollArea, useMantineColorScheme } from '@mantine/core'
+import { Card, ScrollArea, useMantineColorScheme } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import React from 'react'
 import { AssetHistory } from 'types/data'
@@ -19,7 +19,8 @@ const LineChartHistory = ({ history }: Props) => {
   const cl2 = '#7780A1'
   const bCl = dark ? '#262840' : '#E2E2ED'
 
-  const data = history?.map((val) => val.price) || []
+  const data =
+    history?.map((val) => Number(Number(val.price)?.toFixed(2))) || []
   const categories = history?.map((val) =>
     new Date(val.date).toLocaleTimeString()
   )
@@ -81,7 +82,7 @@ const LineChartHistory = ({ history }: Props) => {
       type="always"
       sx={{ height: 220 }}
     >
-      <div style={{ minWidth: 400 }}>
+      <div style={{ minWidth: 450 }}>
         <Chart options={options} series={series} type="line" height={200} />
       </div>
     </ScrollArea>

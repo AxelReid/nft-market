@@ -1,8 +1,11 @@
+import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import {
   ClipboardIcon,
   HeartIcon,
+  LockClosedIcon,
+  NoSymbolIcon,
   ShareIcon,
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartFilledIcon } from '@heroicons/react/24/solid'
@@ -22,19 +25,20 @@ import {
 } from '@mantine/core'
 import Wrapper from 'containers/Wrapper'
 import WrapperFull from 'containers/WrapperFull'
-import Filter from 'components/Filter'
 import Header from 'components/Header'
 import MyFooter from 'components/MyFooter'
 import useTxtStyles from 'styles/useTxtStyles'
 import IOSCard from 'components/IOSCard'
 import LineChartHistory from 'components/LineChartHistory'
-import { NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import requests from 'requests'
 import { useRouter } from 'next/router'
-import { useQuery } from '@tanstack/react-query'
 import { BASE_URL } from 'requests/constants'
 import { showNotification } from '@mantine/notifications'
 import useMyTimer from 'utils/timeFormatter'
+import { AssetDetails } from 'types/data'
+import { getCookie } from 'cookies-next'
+const Filter = dynamic(() => import('components/Filter'))
 
 const useStyles = createStyles((theme) => ({
   box: {
@@ -51,9 +55,13 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const NftDetails: NextPage = () => {
+interface Props {
+  data: AssetDetails
+}
+
+const NftDetails = ({ data }: Props) => {
   const router = useRouter()
-  const slug = router.query?.slug
+  const token = !!getCookie('token')
 
   const { classes } = useTxtStyles()
   const { classes: cls } = useStyles()
@@ -61,20 +69,36 @@ const NftDetails: NextPage = () => {
   const ioscolors = colorScheme === 'light' ? ['#F2F3F6', '#F2F3F6'] : undefined
   const [loading, setLoading] = useState(false)
 
-  const { data, refetch } = useQuery(['asset'], () =>
-    requests.assets.getOne(slug)
-  )
-  const { result, expired } = useMyTimer(data?.date?.time_left!)
+  const { result, expired } = useMyTimer(data?.time_left!)
+
+  const revalidate = async () => {
+    try {
+      await requests.others.revalidate(router.asPath)
+    } catch (error: any) {
+      console.error('page revalidation error: ', error?.response)
+    }
+  }
 
   const bid = async () => {
+    if (!token) {
+      router.push('/sign-in')
+      return
+    } else if (expired) {
+      showNotification({
+        color: 'yellow',
+        message: `${data.name} is expired, wait until ${data.creator.name} updates it.`,
+      })
+      return
+    }
+
     setLoading(true)
     try {
-      const res = await requests.assets.bid(data?.date.id!, data?.date.price!)
+      const res = await requests.assets.bid(data?.id!, data?.price!)
       showNotification({
         color: res?.success ? 'green' : 'red',
         message: res.msg,
       })
-      if (res.success) refetch()
+      revalidate()
     } catch (error: any) {
       console.log(error?.response)
     }
@@ -82,11 +106,12 @@ const NftDetails: NextPage = () => {
   }
 
   const addToWish = async () => {
-    const res = await requests.user.addToWish(data?.date.id!)
+    const res = await requests.user.addToWish(data?.id!)
     return await res
   }
   const removeFromWish = async () => {
-    const res = await requests.user.removeFromWish(data?.date.id!)
+    const res = await requests.user.removeFromWish(data?.id!)
+    revalidate()
     return await res
   }
 
@@ -96,7 +121,6 @@ const NftDetails: NextPage = () => {
       color: res.success ? 'green' : 'red',
       message: res?.msg,
     })
-    refetch()
   }
 
   const copy = () => {
@@ -119,9 +143,9 @@ const NftDetails: NextPage = () => {
         >
           <Box sx={{ position: 'absolute', top: 40, right: -28 }}>
             <Btn
-              click={() => handleWish(data?.date?.liked!)}
+              click={() => handleWish(data?.liked!)}
               icon={
-                data?.date.liked ? (
+                data?.liked ? (
                   <HeartFilledIcon width={22} color="red" />
                 ) : (
                   <HeartIcon width={22} />
@@ -150,7 +174,7 @@ const NftDetails: NextPage = () => {
                   })}
                 >
                   <Image
-                    src={BASE_URL + '/' + data?.date.image}
+                    src={BASE_URL + '/' + data?.image}
                     layout="fill"
                     objectFit="cover"
                     alt=""
@@ -164,7 +188,7 @@ const NftDetails: NextPage = () => {
                   weight={600}
                   sx={{ fontSize: 'min(40px,6vw)', lineHeight: 1.2 }}
                 >
-                  {data?.date.name}
+                  {data?.name}
                 </Text>
                 <Text
                   className={classes.secondaryColor}
@@ -173,19 +197,19 @@ const NftDetails: NextPage = () => {
                   weight={400}
                   size={16}
                 >
-                  {data?.date.description}
+                  {data?.description}
                 </Text>
                 <Group>
                   <Creator
                     cl={classes.secondaryColor}
-                    src={BASE_URL + '/' + data?.date.creator.avatar}
+                    src={BASE_URL + '/' + data?.creator.avatar}
                     title="creator"
-                    name={data?.date.creator.name || ''}
+                    name={data?.creator.name || ''}
                   />
                   <Creator
                     cl={classes.secondaryColor}
                     title="collection"
-                    name={data?.date.collection.name || ''}
+                    name={data?.collection.name || ''}
                   />
                 </Group>
                 <IOSCard
@@ -203,7 +227,7 @@ const NftDetails: NextPage = () => {
                       </Text>
                       <Group noWrap align="baseline" spacing="sm">
                         <Text weight={600} size={55} sx={{ lineHeight: 1 }}>
-                          {data?.date.price}
+                          {data?.price}
                         </Text>
                         <Text weight={600} size={24}>
                           ETH
@@ -215,10 +239,10 @@ const NftDetails: NextPage = () => {
                         Time left
                       </Text>
                       <Text weight={600} size={24}>
-                        {result}
+                        {typeof window !== 'undefined' ? result : '0:00'}
                       </Text>
                       <Text weight={400} size={14} color="dimmed">
-                        ({data?.date.time_left})
+                        ({data?.time_left})
                       </Text>
                     </div>
                   </Group>
@@ -226,19 +250,29 @@ const NftDetails: NextPage = () => {
                     mt={25}
                     fullWidth
                     loading={loading}
-                    // disabled={expired}
                     onClick={() => bid()}
+                    color={!token ? 'red' : expired ? 'darkish.1' : 'indigo'}
+                    leftIcon={
+                      !token ? (
+                        <LockClosedIcon width={20} />
+                      ) : expired ? (
+                        <NoSymbolIcon width={22} />
+                      ) : null
+                    }
                   >
-                    Place a bid
+                    {!token
+                      ? 'Login to bid'
+                      : expired
+                      ? 'Not available'
+                      : 'Place a bid'}
                   </Button>
                 </IOSCard>
                 <Box mt={40}></Box>
                 <Text weight={400} size={14} className={classes.secondaryColor}>
-                  History of bids ({data?.date.history.total} people are
-                  bidding)
+                  History of bids ({data?.history.total} people are bidding)
                 </Text>
-                {data?.date?.history?.total! > 0 && (
-                  <LineChartHistory history={data?.date.history?.data} />
+                {data?.history?.total! > 0 && (
+                  <LineChartHistory history={data?.history?.data} />
                 )}
               </Box>
             </Grid.Col>
@@ -320,3 +354,30 @@ const Btn = ({
   )
 }
 export default NftDetails
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = (await requests.assets.slugs()).map((slug) => ({
+    params: slug,
+  }))
+  return {
+    paths,
+    fallback: 'blocking',
+  }
+}
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const carSlug = params?.slug
+  try {
+    const asset = await requests.assets.getOne(carSlug)
+
+    if (!asset?.date) {
+      throw new Error(`Failed to fetch an asset`)
+    }
+    return {
+      props: {
+        data: asset.date,
+      },
+    }
+  } catch (error) {
+    throw new Error(`Failed to fetch an asset`)
+  }
+}
