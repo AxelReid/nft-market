@@ -111,12 +111,12 @@ const NftDetails = ({ data }: Props) => {
   }
   const removeFromWish = async () => {
     const res = await requests.user.removeFromWish(data?.id!)
-    revalidate()
     return await res
   }
 
   const handleWish = async (liked: boolean) => {
     const res = !liked ? await addToWish() : await removeFromWish()
+    revalidate()
     showNotification({
       color: res.success ? 'green' : 'red',
       message: res?.msg,
