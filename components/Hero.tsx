@@ -24,6 +24,9 @@ import Img3 from 'assets/cards/Image(3).png'
 import Img4 from 'assets/cards/Image(4).png'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { useMediaQuery } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
+import { collections } from 'data/static'
+import { useRouter } from 'next/router'
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -39,9 +42,25 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const Hero = () => {
+const Hero = ({ scroll }: { scroll: () => void }) => {
+  const router = useRouter()
+  const { pathname, query } = router
   const { classes, cx } = useStyles()
   const mdSc = useMediaQuery('(max-width: 800px)')
+
+  const form = useForm({
+    initialValues: {
+      search: '',
+      collection: '',
+    },
+  })
+
+  const submit = (values: { search: string; collection: string }) => {
+    router.push({
+      pathname: '/filter',
+      query: values,
+    })
+  }
 
   return (
     <Stack align="center" mt={180} mb={200}>
@@ -90,38 +109,37 @@ const Hero = () => {
         radius={mdSc ? 'lg' : 'lg'}
         style={{ width: '100%', maxWidth: 643, background: 'white' }}
       >
-        <Group noWrap spacing={0} align="center">
-          <Input
-            placeholder="Items, collections and creators"
-            style={{ flex: 'auto' }}
-            classNames={{ input: cx(classes.removeStyle, classes.select) }}
-          />
-          <Divider
-            orientation="vertical"
-            my={5}
-            mx={mdSc ? 0 : 'sm'}
-            color="#ccc"
-          />
-          <Select
-            placeholder="Category"
-            mr="lg"
-            data={[
-              { label: 'Architecture', value: 'architecture' },
-              { label: 'Photography', value: 'photography' },
-              { label: 'Games', value: 'games' },
-              { label: 'Music', value: 'music' },
-            ]}
-            classNames={{
-              input: cx(classes.removeStyle, classes.select),
-              rightSection: classes.select,
-            }}
-            style={{ width: 200 }}
-            rightSection={<ChevronDownIcon width={15} />}
-          />
-          <ActionIcon size="xl" radius="xl" color="indigo.6">
-            <MagnifyingGlassIcon width={24} />
-          </ActionIcon>
-        </Group>
+        <form onSubmit={form.onSubmit(submit)}>
+          <Group noWrap spacing={0} align="center">
+            <Input
+              placeholder="Items, collections and creators"
+              style={{ flex: 'auto' }}
+              classNames={{ input: cx(classes.removeStyle, classes.select) }}
+              {...form.getInputProps('search')}
+            />
+            <Divider
+              orientation="vertical"
+              my={5}
+              mx={mdSc ? 0 : 'sm'}
+              color="#ccc"
+            />
+            <Select
+              placeholder="Category"
+              mr="lg"
+              data={collections}
+              classNames={{
+                input: cx(classes.removeStyle, classes.select),
+                rightSection: classes.select,
+              }}
+              style={{ width: 200 }}
+              rightSection={<ChevronDownIcon width={15} />}
+              {...form.getInputProps('collection')}
+            />
+            <ActionIcon type="submit" size="xl" radius="xl" color="indigo.6">
+              <MagnifyingGlassIcon width={24} />
+            </ActionIcon>
+          </Group>
+        </form>
       </Paper>
       <Logos mt={150} sx={{ width: '100%', maxWidth: 'fit-content' }} />
     </Stack>

@@ -1,3 +1,6 @@
+import { NextLink } from '@mantine/next'
+import Link from 'next/link'
+import React from 'react'
 import {
   Bars3CenterLeftIcon,
   MoonIcon,
@@ -11,9 +14,6 @@ import {
   Menu,
   useMantineColorScheme,
 } from '@mantine/core'
-import { NextLink } from '@mantine/next'
-import Link from 'next/link'
-import React from 'react'
 import useTxtStyles from 'styles/useTxtStyles'
 import Logo from './Logo'
 

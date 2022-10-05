@@ -49,10 +49,7 @@ const SmCard = (props: Props) => {
           : { display: 'flex', flexDirection: 'column', alignItems: 'center' }),
       }}
     >
-      <section
-        className="shadow-xxl"
-        style={{ borderRadius: 10, overflow: 'hidden' }}
-      >
+      <section style={{ borderRadius: smSc ? 15 : 20, overflow: 'hidden' }}>
         <Image
           src={img}
           objectFit="cover"

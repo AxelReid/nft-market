@@ -60,9 +60,11 @@ const MyFooter = () => {
                     )
                   )}
                 </Stack>
-                <Button mt={40} mb={69}>
-                  My account
-                </Button>
+                <Link href="/dashboard" passHref>
+                  <Button component="a" mt={40} mb={69}>
+                    My account
+                  </Button>
+                </Link>
               </Box>
               <Image
                 src={SocialMediaIcons}

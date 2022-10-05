@@ -6,6 +6,8 @@ import Header from 'components/Header'
 import Hero from 'components/Hero'
 import WrapperFull from 'containers/WrapperFull'
 import Wrapper from 'containers/Wrapper'
+import { useState } from 'react'
+import { useScrollIntoView } from '@mantine/hooks'
 
 const SliderBigCard = dynamic(() => import('components/SliderBigCard'))
 const InkChart = dynamic(() => import('components/InkChart'))
@@ -16,12 +18,16 @@ const Stats = dynamic(() => import('components/Stats'))
 const MyFooter = dynamic(() => import('components/MyFooter'))
 
 const Home: NextPage = () => {
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
+    offset: 30,
+  })
+
   return (
     <div>
       <WrapperFull>
         <Header />
         <BgImg />
-        <Hero />
+        <Hero scroll={() => scrollIntoView({ alignment: 'start' })} />
       </WrapperFull>
 
       <SliderBigCard />
@@ -29,7 +35,9 @@ const Home: NextPage = () => {
       <TheHand />
       <PlaneWatch />
       <Divider />
-      <Filter />
+      <div ref={targetRef}>
+        <Filter />
+      </div>
       <Wrapper>
         <Divider mt={110} />
       </Wrapper>

@@ -7,5 +7,5 @@ export interface GetAllParams {
   search?: string
   page?: number
   page_size?: number
-  sort?: 'new' | 'asc' | 'desc' | 'popular'
+  sort?: 'new' | 'asc' | 'desc' | 'popular' | string
 }

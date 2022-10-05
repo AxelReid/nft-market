@@ -1,4 +1,4 @@
-import { Button, Grid, Group, LoadingOverlay, Text } from '@mantine/core'
+import { Button, Grid, Group, Text } from '@mantine/core'
 import Wrapper from '../containers/Wrapper'
 import React, { useCallback, useEffect, useState } from 'react'
 import MyCard from './MyCard'
@@ -17,6 +17,7 @@ const Filter = () => {
     page_size: 12,
     sort: 'new',
     collection: '',
+    search: '',
   })
 
   const get = useCallback(async () => {

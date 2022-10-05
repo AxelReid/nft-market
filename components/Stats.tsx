@@ -19,7 +19,6 @@ import ArtistsIcon from 'assets/ArtistsIcon'
 import WalletIcon from 'assets/WalletIcon'
 import MyCarousel, { MyCarouselSlide } from './MyCarousel'
 import SmCard from './SmCard'
-import Img from 'assets/cards/Image.png'
 import { useMediaQuery } from '@mantine/hooks'
 import useTxtStyles from 'styles/useTxtStyles'
 import requests from 'requests'
@@ -125,10 +124,10 @@ const Stats = () => {
         </IOSCard>
       </Wrapper>
       <WrapperFull noEdge>
-        <MyCarousel slideSize={200} slideGap={24} align="start" loop pb={40}>
+        <MyCarousel slideSize={200} slideGap={24} align="start" loop>
           {data?.length ? (
             data.map((dt, i) => (
-              <MyCarouselSlide size={smSc ? 70 : 89} key={i}>
+              <MyCarouselSlide py={40} size={smSc ? 70 : 89} key={i}>
                 <Link href={'/nft/' + dt.slug} passHref>
                   <a>
                     <SmCard

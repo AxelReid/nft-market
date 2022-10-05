@@ -15,6 +15,7 @@ import { getCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import MyGlobalStyles from 'styles/MyGlobalStyles'
 import { NotificationsProvider } from '@mantine/notifications'
+import { RouterTransition } from 'components/RouterTransition'
 
 const queryClient = new QueryClient()
 
@@ -123,6 +124,7 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
           withGlobalStyles
           withNormalizeCSS
         >
+          <RouterTransition />
           <NotificationsProvider>
             <MyGlobalStyles />
             <Component {...pageProps} />
