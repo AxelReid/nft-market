@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 const useMyTimer = (time: string, onCancel?: () => {}) => {
   const { seconds, minutes, hours, days } = useTimer({
-    expiryTimestamp: new Date(time),
+    expiryTimestamp: isNaN(Date.parse(time)) ? new Date() : new Date(time),
     onExpire: () => {},
   })
   const [result, setResult] = useState('')

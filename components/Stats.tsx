@@ -22,6 +22,10 @@ import SmCard from './SmCard'
 import Img from 'assets/cards/Image.png'
 import { useMediaQuery } from '@mantine/hooks'
 import useTxtStyles from 'styles/useTxtStyles'
+import requests from 'requests'
+import { useQuery } from '@tanstack/react-query'
+import { BASE_URL } from 'requests/constants'
+import Link from 'next/link'
 
 const stats = [
   { value: '300k', label: 'Users Active', icon: <UserCircleIcon width={40} /> },
@@ -34,6 +38,7 @@ const Stats = () => {
   const { classes } = useTxtStyles()
   const ioscolors = colorScheme === 'light' ? ['#F2F3F6', '#F2F3F6'] : undefined
   const smSc = useMediaQuery('(max-width: 800px)')
+  const { data } = useQuery(['tinyCards'], () => requests.assets.tinyCards())
 
   return (
     <>
@@ -121,11 +126,23 @@ const Stats = () => {
       </Wrapper>
       <WrapperFull noEdge>
         <MyCarousel slideSize={200} slideGap={24} align="start" loop pb={40}>
-          {[...Array(20)].map((_, i) => (
-            <MyCarouselSlide size={smSc ? 70 : 89} key={i}>
-              <SmCard img={Img} value="2.55 ETH" fixed={false} />
-            </MyCarouselSlide>
-          ))}
+          {data?.length ? (
+            data.map((dt, i) => (
+              <MyCarouselSlide size={smSc ? 70 : 89} key={i}>
+                <Link href={'/nft/' + dt.slug} passHref>
+                  <a>
+                    <SmCard
+                      img={BASE_URL + dt.image}
+                      value={dt.price + ' ETH'}
+                      fixed={false}
+                    />
+                  </a>
+                </Link>
+              </MyCarouselSlide>
+            ))
+          ) : (
+            <MyCarouselSlide />
+          )}
         </MyCarousel>
       </WrapperFull>
     </>

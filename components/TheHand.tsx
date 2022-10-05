@@ -1,6 +1,14 @@
 import React from 'react'
 import Image from 'next/image'
-import { Box, Button, Card, createStyles, Stack, Text } from '@mantine/core'
+import {
+  Box,
+  Button,
+  Card,
+  createStyles,
+  ScrollArea,
+  Stack,
+  Text,
+} from '@mantine/core'
 import Hand from 'assets/Hand.png'
 import MyCarousel, { MyCarouselSlide } from './MyCarousel'
 import WrapperFull from 'containers/WrapperFull'
@@ -78,11 +86,11 @@ const useStyles = createStyles((theme) => ({
 
 const TheHand = () => {
   const { classes } = useStyles()
-  const { data: dataDesc } = useQuery(['slider_big'], () =>
-    requests.assets.getAll({ sort: 'desc' })
+  const { data: dataDesc } = useQuery(['sliderbig1'], () =>
+    requests.assets.getAll({ sort: 'desc', page: 1, page_size: 4 })
   )
-  const { data: dataPop } = useQuery(['slider_big'], () =>
-    requests.assets.getAll({ sort: 'popular' })
+  const { data: dataPop } = useQuery(['sliderbig2'], () =>
+    requests.assets.getAll({ sort: 'popular', page: 1, page_size: 4 })
   )
 
   return (
@@ -99,19 +107,21 @@ const TheHand = () => {
       >
         <MyCarouselSlide size={440} pt={50}>
           <Slide title="Check out the hottest Sale offers">
-            <MyCarousel
-              align="start"
-              slideSize={360}
-              slideGap={0}
-              loop
-              draggable={false}
-            >
-              {dataPop?.data?.map((dt, i) => (
-                <MyCarouselSlide key={i} size={175}>
-                  <MyCard {...dt} card_type="middle" truncate />
-                </MyCarouselSlide>
-              ))}
-            </MyCarousel>
+            {dataPop?.data?.length! > 0 && (
+              <MyCarousel
+                align="start"
+                slideSize={360}
+                slideGap={0}
+                loop
+                draggable={false}
+              >
+                {dataPop?.data.map((dt, i) => (
+                  <MyCarouselSlide key={i} size={175}>
+                    <MyCard {...dt} card_type="middle" truncate />
+                  </MyCarouselSlide>
+                ))}
+              </MyCarousel>
+            )}
           </Slide>
         </MyCarouselSlide>
         <MyCarouselSlide size={440} pt={50}>
@@ -170,14 +180,21 @@ const Slide = ({
       withBorder
       p={0}
       radius={20}
-      sx={{ width: 440, background: 'transparent' }}
+      sx={{
+        width: 440,
+        height: 820,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
     >
       <Box p={40} mb={0}>
         <Text weight={600} size={32} sx={{ lineHeight: '40px' }}>
           {title}
         </Text>
       </Box>
-      <Box mb={20}>{children}</Box>
+      <Box mb={20} sx={{ flex: 1 }}>
+        {children}
+      </Box>
       <Box m={40} mt={0}>
         <Button fullWidth variant="outline" color="gray">
           Show me more

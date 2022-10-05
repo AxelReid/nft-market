@@ -93,7 +93,7 @@ const MyCard = ({
             ? 2.1 / 3.5
             : 1 / 1
         }
-        sx={{ width: card_type === 'small' ? 250 : '100%' }}
+        sx={{ width: card_type === 'small' ? 103 : '100%' }}
       >
         <Card
           p={0}
@@ -172,7 +172,7 @@ const MyCard = ({
           <Group align="center">
             {card_type === 'big' && (
               <Avatar.Group spacing="sm">
-                {biddings?.map((bidding, i) => (
+                {biddings?.slice(0, 3).map((bidding, i) => (
                   <Avatar
                     key={i}
                     src={bidding.avatar}
@@ -182,6 +182,9 @@ const MyCard = ({
                     {bidding?.name?.charAt(0)}
                   </Avatar>
                 ))}
+                {biddings.length > 3 && (
+                  <Avatar radius="xl">+{biddings.length}</Avatar>
+                )}
               </Avatar.Group>
             )}
             <Text weight={400} size={14} color="dimmed">

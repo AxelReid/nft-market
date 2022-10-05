@@ -1,4 +1,5 @@
 import { Card, ScrollArea, useMantineColorScheme } from '@mantine/core'
+import dayjs from 'dayjs'
 import dynamic from 'next/dynamic'
 import React from 'react'
 import { AssetHistory } from 'types/data'
@@ -22,7 +23,7 @@ const LineChartHistory = ({ history }: Props) => {
   const data =
     history?.map((val) => Number(Number(val.price)?.toFixed(2))) || []
   const categories = history?.map((val) =>
-    new Date(val.date).toLocaleTimeString()
+    dayjs(val.date).format('D MMM HH:mm')
   )
 
   const series: ApexAxisChartSeries | ApexNonAxisChartSeries = [

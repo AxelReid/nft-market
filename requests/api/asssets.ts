@@ -15,5 +15,7 @@ const assets = {
     init.post('/projects/asset/update', data),
   bid: (id: number, price: number) =>
     init.post('/projects/submit/', { id, price }),
+  tinyCards: (): Promise<{ slug: string; image: string; price: number }[]> =>
+    request.get('/projects/footer-tems')?.then((res) => res.data),
 }
 export default assets

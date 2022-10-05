@@ -1,4 +1,4 @@
-import { Button, Grid, Group, Text } from '@mantine/core'
+import { Button, Grid, Group, LoadingOverlay, Text } from '@mantine/core'
 import Wrapper from '../containers/Wrapper'
 import React, { useCallback, useEffect, useState } from 'react'
 import MyCard from './MyCard'
@@ -11,6 +11,7 @@ const collection_tabs = ['Architecture', 'Photography', 'Games', 'Music']
 const Filter = () => {
   const [data, setData] = useState<Asset[]>([])
   const [count, setCount] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const [filter, setFilter] = useState<GetAllParams>({
     page_size: 12,
@@ -19,9 +20,11 @@ const Filter = () => {
   })
 
   const get = useCallback(async () => {
+    setLoading(true)
     const res = await requests.assets.getAll(filter)
     setCount(res?.count)
     setData(res?.data)
+    setLoading(false)
   }, [filter])
 
   useEffect(() => {
@@ -47,6 +50,7 @@ const Filter = () => {
         <Group position="center" mt={44}>
           {collection_tabs?.map((tab) => (
             <Button
+              disabled={loading}
               onClick={() => {
                 setFilter((prev) => ({
                   ...prev,
@@ -75,6 +79,7 @@ const Filter = () => {
           <Button
             variant="outline"
             color="gray"
+            disabled={loading}
             onClick={() => {
               setFilter((prev) => ({ ...prev, page_size: prev.page_size! + 6 }))
             }}

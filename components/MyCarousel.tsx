@@ -2,7 +2,6 @@ import React from 'react'
 import { Carousel, CarouselProps } from '@mantine/carousel'
 import { CarouselSlideProps } from '@mantine/carousel/lib/CarouselSlide/CarouselSlide'
 import { createStyles } from '@mantine/core'
-import { ChevronRightIcon } from '@heroicons/react/24/outline'
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   root: {
@@ -35,13 +34,13 @@ const MyCarousel = (props: CarouselProps) => {
       controlSize={60}
       {...props}
     >
-      {props.children}
+      {props?.children}
     </Carousel>
   )
 }
 export const MyCarouselSlide = (props: CarouselSlideProps) => (
   <Carousel.Slide size={400} {...props}>
-    {props.children}
+    {props?.children}
   </Carousel.Slide>
 )
 export default MyCarousel

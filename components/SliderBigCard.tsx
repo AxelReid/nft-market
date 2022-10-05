@@ -16,13 +16,15 @@ const SliderBigCard = () => {
       <Text align="center" size={36} weight={600} mb={96}>
         Latest live auctions
       </Text>
-      <MyCarousel>
-        {data?.data?.map((dum, i) => (
-          <MyCarouselSlide key={i} size={400}>
-            <MyCard {...dum} />
-          </MyCarouselSlide>
-        ))}
-      </MyCarousel>
+      {data?.data?.length! > 0 && (
+        <MyCarousel loop>
+          {data?.data.map((dum, i) => (
+            <MyCarouselSlide key={i} size={400}>
+              <MyCard {...dum} />
+            </MyCarouselSlide>
+          ))}
+        </MyCarousel>
+      )}
     </WrapperFull>
   )
 }

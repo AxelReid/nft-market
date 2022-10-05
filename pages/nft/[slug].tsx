@@ -30,7 +30,7 @@ import MyFooter from 'components/MyFooter'
 import useTxtStyles from 'styles/useTxtStyles'
 import IOSCard from 'components/IOSCard'
 import LineChartHistory from 'components/LineChartHistory'
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import requests from 'requests'
 import { useRouter } from 'next/router'
 import { BASE_URL } from 'requests/constants'
@@ -38,6 +38,7 @@ import { showNotification } from '@mantine/notifications'
 import useMyTimer from 'utils/timeFormatter'
 import { AssetDetails } from 'types/data'
 import { getCookie } from 'cookies-next'
+import { useQuery } from '@tanstack/react-query'
 const Filter = dynamic(() => import('components/Filter'))
 
 const useStyles = createStyles((theme) => ({
@@ -61,22 +62,34 @@ interface Props {
 
 const NftDetails = ({ data }: Props) => {
   const router = useRouter()
+  const { pathname, query } = router
   const token = !!getCookie('token')
-
   const { classes } = useTxtStyles()
   const { classes: cls } = useStyles()
   const { colorScheme } = useMantineColorScheme()
   const ioscolors = colorScheme === 'light' ? ['#F2F3F6', '#F2F3F6'] : undefined
   const [loading, setLoading] = useState(false)
+  const { data: checkInWish, refetch } = useQuery(['checkInWish'], () =>
+    requests.user.checkInWishlist(data?.id)
+  )
+  const liked = !!checkInWish?.liked
 
   const { result, expired } = useMyTimer(data?.time_left!)
 
   const revalidate = async () => {
-    try {
-      await requests.others.revalidate(router.asPath)
-    } catch (error: any) {
-      console.error('page revalidation error: ', error?.response)
-    }
+    router.push(
+      {
+        pathname,
+        query,
+      },
+      {},
+      { scroll: false }
+    )
+    // try {
+    //   await requests.others.revalidate(router.asPath)
+    // } catch (error: any) {
+    //   console.error('page revalidation error: ', error?.response)
+    // }
   }
 
   const bid = async () => {
@@ -116,7 +129,7 @@ const NftDetails = ({ data }: Props) => {
 
   const handleWish = async (liked: boolean) => {
     const res = !liked ? await addToWish() : await removeFromWish()
-    revalidate()
+    refetch()
     showNotification({
       color: res.success ? 'green' : 'red',
       message: res?.msg,
@@ -143,9 +156,9 @@ const NftDetails = ({ data }: Props) => {
         >
           <Box sx={{ position: 'absolute', top: 40, right: -28 }}>
             <Btn
-              click={() => handleWish(data?.liked!)}
+              click={() => handleWish(liked!)}
               icon={
-                data?.liked ? (
+                liked ? (
                   <HeartFilledIcon width={22} color="red" />
                 ) : (
                   <HeartIcon width={22} />
@@ -355,47 +368,48 @@ const Btn = ({
 }
 export default NftDetails
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = (await requests.assets.slugs()).map((slug) => ({
-    params: slug,
-  }))
-  return {
-    paths,
-    fallback: 'blocking',
-  }
-}
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const carSlug = params?.slug
-  try {
-    const asset = await requests.assets.getOne(carSlug)
-
-    if (!asset?.date) {
-      throw new Error(`Failed to fetch an asset`)
-    }
-    return {
-      props: {
-        data: asset.date,
-      },
-    }
-  } catch (error) {
-    throw new Error(`Failed to fetch an asset`)
-  }
-}
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const paths = (await requests.assets.slugs()).map((slug) => ({
+//     params: slug,
+//   }))
+//   return {
+//     paths,
+//     fallback: 'blocking',
+//   }
+// }
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
 //   const carSlug = params?.slug
 //   try {
 //     const asset = await requests.assets.getOne(carSlug)
 
+//     if (!asset?.date) {
+//       throw new Error(`Failed to fetch an asset`)
+//     }
 //     return {
 //       props: {
-//         data: asset?.date,
+//         data: asset.date,
 //       },
 //     }
 //   } catch (error) {
-//     return {
-//       props: {
-//         data: {},
-//       },
-//     }
+//     throw new Error(`Failed to fetch an asset`)
 //   }
 // }
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const carSlug = params?.slug
+
+  try {
+    const asset = await requests.assets.getOne(carSlug)
+
+    return {
+      props: {
+        data: asset?.date,
+      },
+    }
+  } catch (error) {
+    return {
+      props: {
+        data: {},
+      },
+    }
+  }
+}

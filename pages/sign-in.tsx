@@ -16,7 +16,7 @@ import {
   Textarea,
   useMantineColorScheme,
 } from '@mantine/core'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
@@ -141,6 +141,11 @@ const SignIn = () => {
 
     setLoading(false)
   }
+
+  useEffect(() => {
+    // Prefetch the dashboard page
+    router.prefetch('/dashboard')
+  }, [])
 
   return (
     <div>

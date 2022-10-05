@@ -27,15 +27,8 @@ interface Props {
   left?: number | string
 }
 
-const SmCard = ({
-  fixed = true,
-  img,
-  value,
-  top,
-  right,
-  bottom,
-  left,
-}: Props) => {
+const SmCard = (props: Props) => {
+  const { fixed = true, img, value, top, right, bottom, left } = props
   const smSc = useMediaQuery('(max-width: 800px)')
   const { classes } = useStyles({ smSc })
 
@@ -56,10 +49,13 @@ const SmCard = ({
           : { display: 'flex', flexDirection: 'column', alignItems: 'center' }),
       }}
     >
-      <section className="shadow-xxl">
+      <section
+        className="shadow-xxl"
+        style={{ borderRadius: 10, overflow: 'hidden' }}
+      >
         <Image
           src={img}
-          objectFit="contain"
+          objectFit="cover"
           objectPosition="right"
           width={smSc ? 70 : 89}
           height={smSc ? 70 : 89}

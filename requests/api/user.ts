@@ -6,7 +6,8 @@ const user = {
   myBiddings: (): Promise<{ project: Asset; price: number }[]> =>
     init.get('/projects/assets/projects/biddings'),
   myWishlist: (): Promise<Asset[]> => init.get('/projects/wishlist/get'),
-
+  checkInWishlist: (id: number): Promise<{ liked: boolean }> =>
+    init.post('/projects/wishlist-check', { id }),
   addToWish: (id: number) => init.post('/projects/wishlist/add/', { id }),
   removeFromWish: (id: number) =>
     init.post('/projects/wishlist/remove/', { id }),
