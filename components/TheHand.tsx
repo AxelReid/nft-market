@@ -79,10 +79,10 @@ const useStyles = createStyles((theme) => ({
 const TheHand = () => {
   const { classes } = useStyles()
   const { data: dataDesc } = useQuery(['slider_big'], () =>
-    requests.assets.getAll('?sort=desc')
+    requests.assets.getAll({ sort: 'desc' })
   )
   const { data: dataPop } = useQuery(['slider_big'], () =>
-    requests.assets.getAll('?sort=popular')
+    requests.assets.getAll({ sort: 'popular' })
   )
 
   return (

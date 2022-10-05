@@ -8,7 +8,7 @@ import MyCarousel, { MyCarouselSlide } from './MyCarousel'
 
 const SliderBigCard = () => {
   const { data } = useQuery(['slider_big'], () =>
-    requests.assets.getAll('?sort=new')
+    requests.assets.getAll({ sort: 'new' })
   )
 
   return (
