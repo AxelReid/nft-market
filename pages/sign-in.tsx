@@ -109,15 +109,15 @@ const SignIn = () => {
         formData.set('password', values.password)
         formData.set('password2', values.password2)
         formData.set('biograph', values.biograph)
-        if (!file?.file) {
-          showNotification({
-            color: 'yellow',
-            message: 'Please choose an avatar image',
-          })
-          setLoading(false)
-          return
+        if (file?.file) {
+          // showNotification({
+          //   color: 'yellow',
+          //   message: 'Please choose an avatar image',
+          // })
+          // setLoading(false)
+          // return
+          formData.set('avatar', file.file || '')
         }
-        formData.set('avatar', file.file || '')
 
         await requests.auth.signup(formData)
 

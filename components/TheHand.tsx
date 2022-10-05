@@ -16,6 +16,7 @@ import MyCard from './MyCard'
 import IOSCard from './IOSCard'
 import { useQuery } from '@tanstack/react-query'
 import requests from 'requests'
+import Link from 'next/link'
 
 // const data = [
 //   {
@@ -106,7 +107,10 @@ const TheHand = () => {
         classNames={{ indicator: classes.indicator }}
       >
         <MyCarouselSlide size={440} pt={50}>
-          <Slide title="Check out the hottest Sale offers">
+          <Slide
+            title="Check out the hottest Sale offers"
+            link="/filter?sort=popular"
+          >
             {dataPop?.data?.length! > 0 && (
               <MyCarousel
                 align="start"
@@ -150,13 +154,15 @@ const TheHand = () => {
               Nunc gravida faucibus netus feugiat tellus, viverra massa feugiat.
               Mi est sit.
             </Text>
-            <Button fullWidth mt={38}>
-              Get Started
-            </Button>
+            <Link href="/sign-in" passHref>
+              <Button component="a" fullWidth mt={38}>
+                Get Started
+              </Button>
+            </Link>
           </IOSCard>
         </MyCarouselSlide>
         <MyCarouselSlide size={440} pt={50}>
-          <Slide title="Top NFT at a lower price">
+          <Slide title="Top NFT at a lower price" link="/filter?sort=desc">
             <Stack spacing={15} px={40} mb={45}>
               {dataDesc?.data?.map((dt, i) => (
                 <MyCard key={i} {...dt} card_type="small" truncate />
@@ -171,9 +177,11 @@ const TheHand = () => {
 const Slide = ({
   children,
   title,
+  link,
 }: {
   children: React.ReactNode
   title: string
+  link: string
 }) => {
   return (
     <Card
@@ -197,9 +205,11 @@ const Slide = ({
         {children}
       </Box>
       <Box m={40} mt={0}>
-        <Button fullWidth variant="outline" color="gray">
-          Show me more
-        </Button>
+        <Link href={link} passHref>
+          <Button component="a" fullWidth variant="outline" color="gray">
+            Show me more
+          </Button>
+        </Link>
       </Box>
     </Card>
   )

@@ -124,9 +124,9 @@ const Stats = () => {
         </IOSCard>
       </Wrapper>
       <WrapperFull noEdge>
-        <MyCarousel slideSize={200} slideGap={24} align="start" loop>
-          {data?.length ? (
-            data.map((dt, i) => (
+        {data?.length! > 0 && (
+          <MyCarousel slideSize={200} slideGap={24} align="start" loop>
+            {data?.map((dt, i) => (
               <MyCarouselSlide py={40} size={smSc ? 70 : 89} key={i}>
                 <Link href={'/nft/' + dt.slug} passHref>
                   <a>
@@ -138,11 +138,9 @@ const Stats = () => {
                   </a>
                 </Link>
               </MyCarouselSlide>
-            ))
-          ) : (
-            <MyCarouselSlide />
-          )}
-        </MyCarousel>
+            ))}
+          </MyCarousel>
+        )}
       </WrapperFull>
     </>
   )

@@ -3,9 +3,7 @@ import {
   ActionIcon,
   Box,
   Button,
-  Card,
   Center,
-  Col,
   Grid,
   Group,
   Select,
@@ -20,7 +18,7 @@ import WrapperFull from 'containers/WrapperFull'
 import { collections, sorts } from 'data/static'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import requests from 'requests'
 import { Asset } from 'types/data'
 
@@ -64,10 +62,10 @@ const Filter = ({ data }: Props) => {
 
   return (
     <div>
-      <WrapperFull>
+      <WrapperFull pb={100}>
         <Header />
         <Box my={20}>
-          <Grid>
+          <Grid gutter={20}>
             <Grid.Col span={0} sm={4} md={3} xl={2}>
               <Stack
                 spacing="xl"
@@ -113,6 +111,7 @@ const Filter = ({ data }: Props) => {
                 />
                 <Select
                   label="Sort"
+                  value={filter?.sort}
                   onChange={(value) => handleChange(value, 'sort')}
                   placeholder="Sort"
                   data={sorts}
@@ -137,7 +136,7 @@ const Filter = ({ data }: Props) => {
             </Grid.Col>
           </Grid>
           {data?.count > data?.data?.length && (
-            <Center py={100}>
+            <Center pt={100}>
               <Button
                 variant="outline"
                 color="gray"

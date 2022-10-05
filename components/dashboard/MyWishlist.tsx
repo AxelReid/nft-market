@@ -11,14 +11,14 @@ const MyWishlist = () => {
   const { data, refetch } = useQuery(['get_wishlist'], () =>
     requests.user.myWishlist()
   )
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<number | null>(null)
 
   const unlike = async (id: number) => {
-    setLoading(true)
+    setLoading(id)
     const res = await requests.user.removeFromWish(id)
     showNotification({ message: res?.msg })
     refetch()
-    setLoading(false)
+    setLoading(null)
   }
 
   return (
@@ -33,7 +33,7 @@ const MyWishlist = () => {
                 fullWidth
                 color="red"
                 variant="light"
-                loading={loading}
+                loading={loading === dt.id}
                 onClick={() => unlike(dt.id)}
               >
                 Remove
