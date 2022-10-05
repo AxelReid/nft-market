@@ -185,6 +185,7 @@ const Slide = ({
         height: 820,
         display: 'flex',
         flexDirection: 'column',
+        background: 'transparent',
       }}
     >
       <Box p={40} mb={0}>
