@@ -1,4 +1,4 @@
-import { Card, ScrollArea, useMantineColorScheme } from '@mantine/core'
+import { ScrollArea, useMantineColorScheme } from '@mantine/core'
 import dayjs from 'dayjs'
 import dynamic from 'next/dynamic'
 import React from 'react'

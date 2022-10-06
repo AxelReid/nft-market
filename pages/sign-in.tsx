@@ -6,13 +6,10 @@ import {
   Text,
   Group,
   Button,
-  Checkbox,
   Anchor,
   Stack,
   Center,
   Card,
-  FileButton,
-  ActionIcon,
   Textarea,
   useMantineColorScheme,
 } from '@mantine/core'
@@ -145,6 +142,7 @@ const SignIn = () => {
   useEffect(() => {
     // Prefetch the dashboard page
     router.prefetch('/dashboard')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

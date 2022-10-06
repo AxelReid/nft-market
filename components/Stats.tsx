@@ -48,7 +48,7 @@ const Stats = () => {
               spacing={4}
               key={i}
               align="center"
-              style={{
+              sx={{
                 transform: i == 0 ? 'translateY(-3px)' : '',
                 width: 223,
               }}
@@ -79,7 +79,14 @@ const Stats = () => {
           colors={ioscolors}
           w={'min(370px,40%)'}
           h={30}
-          style={{ width: '100%', position: 'relative', isolation: 'isolate' }}
+          props={{
+            children: null,
+            style: {
+              width: '100%',
+              position: 'relative',
+              isolation: 'isolate',
+            },
+          }}
         >
           <Group mt={50} mb={39} ml={'min(78px,7%)'}>
             <Box>

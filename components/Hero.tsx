@@ -42,9 +42,8 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const Hero = ({ scroll }: { scroll: () => void }) => {
+const Hero = () => {
   const router = useRouter()
-  const { pathname, query } = router
   const { classes, cx } = useStyles()
   const mdSc = useMediaQuery('(max-width: 800px)')
 

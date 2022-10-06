@@ -18,23 +18,23 @@ import TimerIcon from './TimerIcon'
 import { HeartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/24/solid'
 import Link from 'next/link'
-import { useTimer } from 'react-timer-hook'
-import timeFormatter from 'utils/timeFormatter'
-import useMyTimer from 'utils/timeFormatter'
 import { Asset } from 'types/data'
+import Countdown from './Countdown'
 
-const useStyles = createStyles((theme, _, getRef) => ({
+const useStyles = createStyles((theme) => ({
   img: {
-    transition: '.3s',
-  },
-  hoverImg: {
-    transform: 'scale(1.1)',
-    filter: 'brightness(1.1)',
+    transition: '.5s',
+    '&:hover': {
+      transform: 'scale(1.02)',
+      filter: 'brightness(1.1)',
+    },
   },
   hoverLink: {
-    textDecoration: 'underline',
-    textDecorationThickness: 1,
-    color: theme.colors.indigo[theme.colorScheme === 'dark' ? 3 : 5],
+    '&:hover': {
+      textDecoration: 'underline',
+      textDecorationThickness: 1,
+      color: theme.colors.indigo[theme.colorScheme === 'dark' ? 3 : 5],
+    },
   },
 }))
 
@@ -58,9 +58,8 @@ const MyCard = ({
   bottomSection,
 }: Props) => {
   const { colorScheme } = useMantineColorScheme()
-  const { classes, cx } = useStyles()
-  const [isHover, setIsHover] = useState(false)
-  const { result, expired } = useMyTimer(time_left)
+  const { classes } = useStyles()
+  const [expired, setIsExpired] = useState(false)
 
   const Price = () => (
     <Badge
@@ -93,7 +92,9 @@ const MyCard = ({
             ? 2.1 / 3.5
             : 1 / 1
         }
-        sx={{ width: card_type === 'small' ? 103 : '100%' }}
+        sx={{
+          width: card_type === 'small' ? 103 : '100%',
+        }}
       >
         <Card
           p={0}
@@ -110,9 +111,7 @@ const MyCard = ({
                 layout="fill"
                 alt=""
                 objectFit="cover"
-                className={cx(classes.img, { [classes.hoverImg]: !!isHover })}
-                onMouseEnter={() => setIsHover(true)}
-                onMouseLeave={() => setIsHover(false)}
+                className={classes.img}
               />
             </a>
           </Link>
@@ -130,10 +129,8 @@ const MyCard = ({
                 size={20}
                 weight={600}
                 style={{ lineHeight: '25px' }}
-                className={cx({ [classes.hoverLink]: !!isHover })}
+                className={classes.hoverLink}
                 lineClamp={truncate ? 2 : 0}
-                onMouseEnter={() => setIsHover(true)}
-                onMouseLeave={() => setIsHover(false)}
               >
                 {name}
               </Text>
@@ -156,7 +153,7 @@ const MyCard = ({
             <Group spacing="sm">
               <TimerIcon width={18} />
               <Text weight={400} size={14} mt={5}>
-                {result}{' '}
+                <Countdown time_left={time_left} setIsExpired={setIsExpired} />{' '}
                 {card_type === 'big'
                   ? 'mins left'
                   : card_type === 'middle'

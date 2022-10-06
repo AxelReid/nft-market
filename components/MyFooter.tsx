@@ -52,7 +52,7 @@ const MyFooter = () => {
             <Stack p={47} justify="space-between" sx={{ height: '100%' }}>
               <Box>
                 <Stack>
-                  {['Community', 'Roadmap', 'Discover', 'Community'].map(
+                  {['Auctions', 'Roadmap', 'Discover', 'Community'].map(
                     (item) => (
                       <Text weight={600} size={16} key={item}>
                         {item}

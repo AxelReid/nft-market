@@ -65,32 +65,39 @@ const CreateNew = ({
     time: Date | null
   }) => {
     const willExpire = time_left(values.date!, values.time!)
-
-    const formData = new FormData()
-    formData.set('name', values.name)
-    formData.set('description', values.description)
-    formData.set('price', values.price)
-    formData.set('collection', values.collection)
-    formData.set('time_left', willExpire)
-    if (!file?.file) {
+    try {
+      const formData = new FormData()
+      formData.set('name', values.name)
+      formData.set('description', values.description)
+      formData.set('price', values.price)
+      formData.set('collection', values.collection)
+      formData.set('time_left', willExpire)
+      if (!file?.file) {
+        showNotification({
+          color: 'yellow',
+          message: 'Please choose an image',
+        })
+        return
+      }
+      formData.set('image', file?.file)
+      setLoading(true)
+      const res = await requests.assets.create(formData)
+      if (res?.msg === 201) {
+        showNotification({
+          color: 'green',
+          message: 'New asset is successfully created!',
+        })
+        close()
+        refetch()
+      }
+    } catch (error: any) {
+      const invalidImg = error?.response?.data?.image
       showNotification({
-        color: 'yellow',
-        message: 'Please choose an image',
+        color: 'red',
+        message: invalidImg,
       })
-      return
+      setLoading(false)
     }
-    formData.set('image', file?.file)
-    setLoading(true)
-    const res = await requests.assets.create(formData)
-    if (res?.msg === 201) {
-      showNotification({
-        color: 'green',
-        message: 'New asset is successfully created!',
-      })
-      close()
-      refetch()
-    }
-    setLoading(false)
   }
 
   const form = useForm({

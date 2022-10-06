@@ -1,6 +1,8 @@
+import { getCookie } from 'cookies-next'
+import { GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
-import React, { useState } from 'react'
 import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
 import {
   ClipboardIcon,
   HeartIcon,
@@ -30,15 +32,12 @@ import MyFooter from 'components/MyFooter'
 import useTxtStyles from 'styles/useTxtStyles'
 import IOSCard from 'components/IOSCard'
 import LineChartHistory from 'components/LineChartHistory'
-import { GetServerSideProps } from 'next'
 import requests from 'requests'
 import { useRouter } from 'next/router'
 import { BASE_URL } from 'requests/constants'
 import { showNotification } from '@mantine/notifications'
-import useMyTimer from 'utils/timeFormatter'
 import { AssetDetails } from 'types/data'
-import { getCookie } from 'cookies-next'
-import { useQuery } from '@tanstack/react-query'
+import Countdown from 'components/Countdown'
 const Filter = dynamic(() => import('components/Filter'))
 
 const useStyles = createStyles((theme) => ({
@@ -69,12 +68,13 @@ const NftDetails = ({ data }: Props) => {
   const { colorScheme } = useMantineColorScheme()
   const ioscolors = colorScheme === 'light' ? ['#F2F3F6', '#F2F3F6'] : undefined
   const [loading, setLoading] = useState(false)
-  const { data: checkInWish, refetch } = useQuery(['checkInWish'], () =>
-    requests.user.checkInWishlist(data?.id)
-  )
-  const liked = !!checkInWish?.liked
+  const [liked, setLiked] = useState(false)
+  const [expired, setIsExpired] = useState(false)
 
-  const { result, expired } = useMyTimer(data?.time_left!)
+  useEffect(() => {
+    checkIsLiked()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const revalidate = async () => {
     router.push(
@@ -118,6 +118,13 @@ const NftDetails = ({ data }: Props) => {
     setLoading(false)
   }
 
+  const checkIsLiked = async () => {
+    if (token) {
+      const res = await requests.user.checkInWishlist(data?.id)
+      setLiked(res.liked)
+    }
+  }
+
   const addToWish = async () => {
     const res = await requests.user.addToWish(data?.id!)
     return await res
@@ -128,12 +135,20 @@ const NftDetails = ({ data }: Props) => {
   }
 
   const handleWish = async (liked: boolean) => {
+    if (!token) {
+      showNotification({
+        color: 'red',
+        message: 'You can like without authorization!',
+      })
+      return
+    }
     const res = !liked ? await addToWish() : await removeFromWish()
-    refetch()
+
     showNotification({
-      color: res.success ? 'green' : 'red',
+      color: !res.success ? 'red' : 'green',
       message: res?.msg,
     })
+    checkIsLiked()
   }
 
   const copy = () => {
@@ -227,11 +242,9 @@ const NftDetails = ({ data }: Props) => {
                 </Group>
                 <IOSCard
                   bodyW={'auto'}
-                  mt={45}
-                  mb={40}
-                  py={32}
                   colors={ioscolors}
                   topbar={false}
+                  props={{ children: null, mt: 45, mb: 40, py: 32 }}
                 >
                   <Group position="apart" align="start" mb={25}>
                     <div>
@@ -252,7 +265,10 @@ const NftDetails = ({ data }: Props) => {
                         Time left
                       </Text>
                       <Text weight={600} size={24}>
-                        {typeof window !== 'undefined' ? result : '0:00'}
+                        <Countdown
+                          time_left={data?.time_left}
+                          setIsExpired={setIsExpired}
+                        />
                       </Text>
                       <Text weight={400} size={14} color="dimmed">
                         ({data?.time_left})
@@ -280,7 +296,6 @@ const NftDetails = ({ data }: Props) => {
                       : 'Place a bid'}
                   </Button>
                 </IOSCard>
-                <Box mt={40}></Box>
                 <Text weight={400} size={14} className={classes.secondaryColor}>
                   History of bids ({data?.history.total} people are bidding)
                 </Text>

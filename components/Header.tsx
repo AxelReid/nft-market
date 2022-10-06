@@ -59,7 +59,7 @@ const Header = () => {
 
             <Menu.Dropdown>
               <Menu.Label>Menu</Menu.Label>
-              <Links type="menu" />
+              <Links type="menu" key="links1" />
             </Menu.Dropdown>
           </Menu>
         </MediaQuery>
@@ -67,7 +67,7 @@ const Header = () => {
       </Group>
       <MediaQuery smallerThan="lg" styles={{ display: 'none' }}>
         <Group spacing={60} position="apart">
-          <Links />
+          <Links key="links2" />
         </Group>
       </MediaQuery>
       <Group>
@@ -108,14 +108,14 @@ const Links = ({ type = 'nav' }: { type?: 'nav' | 'menu' }) => {
     <>
       {links.map((link, i) =>
         type === 'nav' ? (
-          <Link key={i} href={link.href} passHref>
+          <Link key={i + '_anchor'} href={link.href} passHref>
             <Anchor className={classes.navLink} component="a">
               {link.title}
             </Anchor>
           </Link>
         ) : (
           <Menu.Item
-            key={i}
+            key={i + '_menu'}
             component={NextLink}
             href={link.href}
             className={classes.navLink}

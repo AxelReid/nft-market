@@ -62,15 +62,16 @@ const useStyles = createStyles(
 )
 
 interface Props {
-  children: React.ReactNode
+  children?: React.ReactNode
   bodyW?: number | string
   w?: number | string
   h?: number
   colors?: string[]
   topbar?: boolean
+  props?: CardProps
 }
 
-const IOSCard = (props: CardProps & Props) => {
+const IOSCard = (props: Props) => {
   const { topbar = true, bodyW = 440 } = props
   const { w = 170, h = 21, colors = ['#1c1d29', '#060714'], children } = props
 
@@ -85,7 +86,7 @@ const IOSCard = (props: CardProps & Props) => {
       sx={(theme) => ({
         background: theme.fn.linearGradient(180, ...colors),
       })}
-      {...props}
+      {...props?.props}
     >
       {topbar && (
         <Card withBorder radius={0} p={0} pl="md" className="topbar">

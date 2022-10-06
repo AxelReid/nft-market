@@ -13,15 +13,16 @@ import {
 } from '@mantine/core'
 import Header from 'components/Header'
 import MyCard from 'components/MyCard'
-import MyFooter from 'components/MyFooter'
 import WrapperFull from 'containers/WrapperFull'
 import { collections, sorts } from 'data/static'
 import { GetServerSideProps } from 'next'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import requests from 'requests'
 import { Asset } from 'types/data'
 
+const MyFooter = dynamic(() => import('components/MyFooter'))
 interface Props {
   data: { count: number; data: Asset[] }
 }
@@ -62,7 +63,7 @@ const Filter = ({ data }: Props) => {
 
   return (
     <div>
-      <WrapperFull pb={100}>
+      <WrapperFull props={{ pb: 100 }}>
         <Header />
         <Box my={20}>
           <Grid gutter={20}>
