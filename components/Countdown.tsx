@@ -10,7 +10,6 @@ const Countdown = memo(({ time_left, setIsExpired }: Props) => {
   const { result, expired } = useMyTimer(time_left!)
 
   useEffect(() => {
-    console.log('expired: ', expired)
     if (typeof setIsExpired === 'function') setIsExpired(expired)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expired])
