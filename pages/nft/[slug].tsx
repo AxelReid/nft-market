@@ -34,7 +34,6 @@ import IOSCard from 'components/IOSCard'
 import LineChartHistory from 'components/LineChartHistory'
 import requests from 'requests'
 import { useRouter } from 'next/router'
-import { BASE_URL } from 'requests/constants'
 import { showNotification } from '@mantine/notifications'
 import { AssetDetails } from 'types/data'
 import Countdown from 'components/Countdown'
@@ -202,7 +201,7 @@ const NftDetails = ({ data }: Props) => {
                   })}
                 >
                   <Image
-                    src={BASE_URL + '/' + data?.image}
+                    src={data?.image}
                     layout="fill"
                     objectFit="cover"
                     alt=""
@@ -230,7 +229,7 @@ const NftDetails = ({ data }: Props) => {
                 <Group>
                   <Creator
                     cl={classes.secondaryColor}
-                    src={BASE_URL + '/' + data?.creator.avatar}
+                    src={data?.creator.avatar}
                     title="creator"
                     name={data?.creator.name || ''}
                   />
@@ -410,14 +409,16 @@ export default NftDetails
 //   }
 // }
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const carSlug = params?.slug
+  const cardSlug = params?.slug
 
   try {
-    const asset = await requests.assets.getOne(carSlug)
+    const asset = await requests.assets.getOne(
+      cardSlug?.toString() || 'asset-1'
+    )
 
     return {
       props: {
-        data: asset?.date,
+        data: asset,
       },
     }
   } catch (error) {

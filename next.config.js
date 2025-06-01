@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com', 'nftdeploy.pythonanywhere.com'],
+    domains: [
+      //'images.unsplash.com',
+      'i.pinimg.com',
+    ],
   },
 }
 

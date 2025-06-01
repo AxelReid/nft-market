@@ -23,7 +23,6 @@ import { useMediaQuery } from '@mantine/hooks'
 import useTxtStyles from 'styles/useTxtStyles'
 import requests from 'requests'
 import { useQuery } from '@tanstack/react-query'
-import { BASE_URL } from 'requests/constants'
 import Link from 'next/link'
 
 const stats = [
@@ -138,7 +137,7 @@ const Stats = () => {
                 <Link href={'/nft/' + dt.slug} passHref>
                   <a>
                     <SmCard
-                      img={BASE_URL + dt.image}
+                      img={dt.image}
                       value={dt.price + ' ETH'}
                       fixed={false}
                     />

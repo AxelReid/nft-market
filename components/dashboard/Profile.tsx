@@ -11,7 +11,6 @@ import { removeCookies } from 'cookies-next'
 import { useRouter } from 'next/router'
 import { useQuery } from '@tanstack/react-query'
 import requests from 'requests'
-import { BASE_URL } from 'requests/constants'
 
 const Profile = () => {
   const router = useRouter()
@@ -20,12 +19,7 @@ const Profile = () => {
   return (
     <div>
       <Center mb={10} mt={70}>
-        <Avatar
-          src={BASE_URL + '/images/' + data?.avatar}
-          variant="light"
-          size={150}
-          radius={100}
-        >
+        <Avatar src={data?.avatar} variant="light" size={150} radius={100}>
           A
         </Avatar>
       </Center>
