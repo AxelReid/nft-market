@@ -130,7 +130,7 @@ const NFTs = [
 
 const generate = (slug: string, i = randomNum(NFTs.length)) => {
   const time_left = new Date()
-  time_left.setHours(time_left.getHours() + randomNum(24))
+  time_left.setHours(time_left.getHours() + randomNum(2, 24))
 
   const nft = NFTs[i]
 
